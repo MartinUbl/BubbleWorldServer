@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\Gameplay">
+      <UniqueIdentifier>{9e6cfbcc-fcb0-493d-946f-793d5f44482f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\General">
+      <UniqueIdentifier>{08c25d20-c096-4d79-b506-2779fdd84f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Network">
+      <UniqueIdentifier>{5bf13e53-ecc5-44a4-9e71-1fb233d70401}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Services">
+      <UniqueIdentifier>{39d5f345-be55-43dd-a5a5-d52c396c9a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Storage">
+      <UniqueIdentifier>{a4ec47a8-5faa-41d0-b221-7b7e0ac8b77d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Objects">
+      <UniqueIdentifier>{00fe84cf-d299-49e4-bf3e-b28c0bb184c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\General\Application.cpp">
+      <Filter>src\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\General\Main.cpp">
+      <Filter>src\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Network\NetworkManager.cpp">
+      <Filter>src\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Network\PacketHandlers.cpp">
+      <Filter>src\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Network\SmartPacket.cpp">
+      <Filter>src\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Services\AuthenticationService.cpp">
+      <Filter>src\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Network\Session.cpp">
+      <Filter>src\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\General\Log.cpp">
+      <Filter>src\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Services\ResourceStreamService.cpp">
+      <Filter>src\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Storage\DatabaseConnection.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Storage\ResourceStorage.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\General\CRC32.cpp">
+      <Filter>src\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Storage\MapStorage.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\General\SHA1.cpp">
+      <Filter>src\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Storage\CharacterStorage.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Creature.cpp">
+      <Filter>src\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Player.cpp">
+      <Filter>src\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Unit.cpp">
+      <Filter>src\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\WorldObject.cpp">
+      <Filter>src\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay\Map.cpp">
+      <Filter>src\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay\MapManager.cpp">
+      <Filter>src\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay\ObjectAccessor.cpp">
+      <Filter>src\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\General\Vector2.cpp">
+      <Filter>src\General</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\General\Application.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\General.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\Singleton.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Network\NetworkManager.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Network\Opcodes.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Network\PacketHandlers.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Network\SmartPacket.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Services\AuthenticationService.h">
+      <Filter>src\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Network\Session.h">
+      <Filter>src\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\Log.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Services\ResourceStreamService.h">
+      <Filter>src\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\DatabaseConnection.h">
+      <Filter>src\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\ResourceStorage.h">
+      <Filter>src\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\SharedEnums.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\CRC32.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay\MapEnums.h">
+      <Filter>src\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\MapStorage.h">
+      <Filter>src\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\SHA1.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\CharacterStorage.h">
+      <Filter>src\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Creature.h">
+      <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\ObjectEnums.h">
+      <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Player.h">
+      <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Unit.h">
+      <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\WorldObject.h">
+      <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay\Map.h">
+      <Filter>src\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay\MapManager.h">
+      <Filter>src\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\UpdateFields.h">
+      <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay\ObjectAccessor.h">
+      <Filter>src\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\AnimEnums.h">
+      <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\Vector2.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\Compatibility.h">
+      <Filter>src\General</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

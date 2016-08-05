@@ -1,0 +1,11 @@
+win/bin/*
+win/data
+win/Debug
+win/Release
+win/Win32
+win/x64
+*.opensdf
+*.sdf
+*.suo
+*.vcxproj.user
+*.log

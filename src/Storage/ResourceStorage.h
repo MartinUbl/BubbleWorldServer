@@ -1,0 +1,122 @@
+/**
+ * Copyright (C) 2016 Martin Ubl <http://kennny.cz>
+ *
+ * This file is part of BubbleWorld MMORPG engine
+ *
+ * BubbleWorld is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * BubbleWorld is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
+ **/
+
+#ifndef BW_RESOURCESTORAGE_H
+#define BW_RESOURCESTORAGE_H
+
+#include "Singleton.h"
+
+/*
+ * Structure containing resource base information
+ */
+struct ResourceRecord
+{
+    // resource ID
+    uint32_t id;
+    // resource type
+    ResourceType type;
+    // resource filename
+    std::string filename;
+    // checksum of file
+    std::string checksum;
+};
+
+typedef std::map<uint32_t, ResourceRecord> ResourceMap;
+
+/*
+ * Structure containing metadata of animation
+ */
+struct ImageAnimationMetadata
+{
+    // image ID
+    uint32_t imageId;
+    // animation ID
+    uint32_t animId;
+    // first frame
+    uint32_t frameBegin;
+    // last frame
+    uint32_t frameEnd;
+    // milliseconds between frames
+    uint32_t frameDelay;
+};
+
+typedef std::map<uint32_t, ImageAnimationMetadata> ImageAnimationMap;
+
+/*
+ * Structure containing image resource metadata
+ */
+struct ImageResourceMetadata
+{
+    // resource ID
+    uint32_t id;
+    // image (frame) width
+    uint32_t sizeX;
+    // image (frame) height
+    uint32_t sizeY;
+    // image centering point X coordinate
+    uint32_t baseCenterX;
+    // image centering point Y coordinate
+    uint32_t baseCenterY;
+    // metadata checksum
+    std::string checksum;
+
+    // loaded animations
+    ImageAnimationMap animations;
+};
+
+typedef std::map<uint32_t, ImageResourceMetadata> ImageMetadataMap;
+
+/*
+ * Singleton class maintaining all resource records, metadata and animations
+ */
+class ResourceStorage
+{
+    friend class Singleton<ResourceStorage>;
+    public:
+        ~ResourceStorage();
+
+        // loads resource data from database
+        void LoadFromDB();
+        // verifies checksums of all resources and their metadata
+        void VerifyChecksums();
+
+        // retrieves generic resource record
+        ResourceRecord* GetResource(ResourceType type, uint32_t id);
+        // retrieves image metadata structure
+        ImageResourceMetadata* GetImageMetadata(uint32_t id);
+
+    protected:
+        // protected singleton constructor
+        ResourceStorage();
+
+        // update checksum of resource in database
+        void UpdateChecksumOf(ResourceType type, uint32_t id, const char* checksum);
+        // update checksum of resource metadata in database
+        void UpdateChecksumOfImageMetadata(uint32_t id, const char* checksum);
+
+    private:
+        // all loaded and available resources map
+        ResourceMap m_resources[MAX_RSTYPE];
+        // map of loaded image metadata
+        ImageMetadataMap m_imageMetadata;
+};
+
+#define sResourceStorage Singleton<ResourceStorage>::getInstance()
+
+#endif
