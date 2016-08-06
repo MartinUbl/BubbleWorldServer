@@ -234,6 +234,11 @@ uint32_t WorldObject::GetMapId()
     return m_positionMap;
 }
 
+Map* WorldObject::GetMap()
+{
+    return sMapManager->GetMap(m_positionMap);
+}
+
 void WorldObject::RelocateWithinMap(float x, float y)
 {
     Map* map = sMapManager->GetMap(m_positionMap);

@@ -268,14 +268,32 @@ uint32_t Map::GetCellIndexY(float fieldY)
     return (uint32_t)fieldY / MAP_CELL_SIZE_Y;
 }
 
-uint32_t GetCellStartX(uint32_t indexX)
+uint32_t Map::GetCellStartX(uint32_t indexX)
 {
     return indexX * MAP_CELL_SIZE_X;
 }
 
-uint32_t GetCellStartY(uint32_t indexY)
+uint32_t Map::GetCellStartY(uint32_t indexY)
 {
     return indexY * MAP_CELL_SIZE_Y;
+}
+
+MapField* Map::GetField(float x, float y)
+{
+    uint32_t iX = GetCellIndexX(x);
+    uint32_t iY = GetCellIndexY(y);
+
+    if (m_storedMapRecord->chunks.size() <= iX)
+        return nullptr;
+    if (m_storedMapRecord->chunks[iX].size() <= iY)
+        return nullptr;
+
+    MapChunkRecord* target = &m_storedMapRecord->chunks[iX][iY];
+
+    iX = target->GetFieldOffsetX((uint32_t)x);
+    iY = target->GetFieldOffsetY((uint32_t)y);
+
+    return &target->fields[iX][iY];
 }
 
 void Map::GetCellSorroundingLimits(uint32_t cellX, uint32_t cellY, uint32_t &beginX, uint32_t &beginY, uint32_t &endX, uint32_t &endY)

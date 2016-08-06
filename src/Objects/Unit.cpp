@@ -22,6 +22,8 @@
 #include "Opcodes.h"
 #include "SmartPacket.h"
 #include "Log.h"
+#include "Map.h"
+#include "MapStorage.h"
 
 Unit::Unit(ObjectType type) : WorldObject(type)
 {
@@ -53,7 +55,26 @@ void Unit::Update()
         uint32_t msDiff = getMSTimeDiff(m_lastMovementUpdate, msNow);
         if (msDiff >= 1)
         {
-            SetPosition(GetPositionX() + (float)msDiff * m_moveVector.x, GetPositionY() + (float)msDiff * m_moveVector.y);
+            float coef = (float)msDiff;
+            float oldX = m_position.x;
+            float oldY = m_position.y;
+
+            m_position.x += coef * m_moveVector.x;
+            if (m_position.x < 0.0f)
+                m_position.x = 0.0f;
+
+            MapField* mf = GetMap()->GetField(m_position.x, m_position.y);
+            if (!mf || !CanMoveOn((MapFieldType)mf->type, mf->flags))
+                m_position.x = oldX;
+
+            m_position.y += coef * m_moveVector.y;
+            if (m_position.y < 0.0f)
+                m_position.y = 0.0f;
+
+            mf = GetMap()->GetField(m_position.x, m_position.y);
+            if (!mf || !CanMoveOn((MapFieldType)mf->type, mf->flags))
+                m_position.y = oldY;
+
             m_lastMovementUpdate = msNow;
         }
 
@@ -103,6 +124,12 @@ void Unit::SetLevel(uint16_t lvl, bool onLoad)
         return;
 
     // TODO: things related to levelup / leveldown ?
+}
+
+bool Unit::CanMoveOn(MapFieldType type, uint32_t flags)
+{
+    // for now just ground type
+    return (type == MFT_GROUND);
 }
 
 void Unit::StartMoving(MoveDirectionElement dir)

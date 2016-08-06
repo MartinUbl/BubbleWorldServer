@@ -64,6 +64,7 @@ class Unit;
 class Player;
 class Creature;
 class SmartPacket;
+class Map;
 
 /*
  * Base class for all objects in world
@@ -149,6 +150,8 @@ class WorldObject
         float GetPositionY();
         // retrieves current map ID
         uint32_t GetMapId();
+        // retrieves current map
+        Map* GetMap();
 
         // relocates object within map
         void RelocateWithinMap(float x, float y);

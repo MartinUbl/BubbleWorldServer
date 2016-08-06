@@ -69,6 +69,8 @@ static const uint32_t movementAnims[] = {
 // delay between two movement heartbeat packets
 #define MOVEMENT_HEARTBEAT_SEND_DELAY 1000
 
+enum MapFieldType;
+
 /*
  * Class representing every "living" object in game
  */
@@ -95,6 +97,8 @@ class Unit : public WorldObject
 
         // talk using specified talk type and supplied string
         void Talk(TalkType type, const char* str);
+        // can the unit move over this field type?
+        bool CanMoveOn(MapFieldType type, uint32_t flags);
 
     protected:
         // protected constructor; instantiate child classes

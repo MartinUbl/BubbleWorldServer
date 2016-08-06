@@ -23,6 +23,7 @@
 #include "MapEnums.h"
 
 struct MapRecord;
+struct MapField;
 class WorldObject;
 class SmartPacket;
 class Player;
@@ -82,6 +83,9 @@ class Map
         void SendCellCreatePacketsFor(uint32_t cellX, uint32_t cellY, WorldObject* wobj);
         // when object leaves cell, delete him for objects there, and delete objects for him
         void SendCellDeletePacketsFor(uint32_t cellX, uint32_t cellY, WorldObject* wobj);
+
+        // retrieves map field
+        MapField* GetField(float x, float y);
 
     protected:
         //
