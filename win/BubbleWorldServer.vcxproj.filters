@@ -94,6 +94,9 @@
     <ClCompile Include="..\src\General\Vector2.cpp">
       <Filter>src\General</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Storage\CreatureStorage.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\General\Application.h">
@@ -188,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="..\src\General\Compatibility.h">
       <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\CreatureStorage.h">
+      <Filter>src\Storage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

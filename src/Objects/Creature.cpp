@@ -19,6 +19,8 @@
 
 #include "General.h"
 #include "Creature.h"
+#include "CreatureStorage.h"
+#include "Log.h"
 
 Creature::Creature() : Unit(OTYPE_CREATURE)
 {
@@ -33,6 +35,20 @@ Creature::~Creature()
 void Creature::Create(uint32_t guidLow, uint32_t entry)
 {
     Unit::Create(MAKE_GUID64(HIGHGUID_CREATURE, entry, guidLow));
+
+    CreatureTemplateRecord* rec = sCreatureStorage->GetCreatureTemplate(entry);
+    if (!rec)
+    {
+        sLog->Error("Unable to retrieve requested creature template entry %u (for guid low %u)", entry, guidLow);
+        return;
+    }
+
+    SetName(rec->name.c_str());
+    SetLevel(rec->level, true);
+    SetImageId(rec->imageId);
+    SetFaction(rec->faction);
+    SetMaxHealth(rec->health);
+    SetHealth(rec->health);
 }
 
 void Creature::Update()

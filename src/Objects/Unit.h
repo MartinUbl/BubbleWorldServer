@@ -99,6 +99,18 @@ class Unit : public WorldObject
         void Talk(TalkType type, const char* str);
         // can the unit move over this field type?
         bool CanMoveOn(MapFieldType type, uint32_t flags);
+        // retrieves unit current health
+        uint32_t GetHealth();
+        // retrieves unit maximum health
+        uint32_t GetMaxHealth();
+        // sets unit current health
+        void SetHealth(uint32_t health);
+        // sets unit maximum health
+        void SetMaxHealth(uint32_t maxHealth);
+        // retrieves unit faction
+        uint32_t GetFaction();
+        // sets unit faction
+        void SetFaction(uint32_t faction);
 
     protected:
         // protected constructor; instantiate child classes

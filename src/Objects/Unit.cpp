@@ -199,3 +199,37 @@ void Unit::Talk(TalkType type, const char* str)
     pkt.WriteString(str);
     SendPacketToSorroundings(pkt);
 }
+
+uint32_t Unit::GetHealth()
+{
+    return GetUInt32Value(UNIT_FIELD_HEALTH);
+}
+
+uint32_t Unit::GetMaxHealth()
+{
+    return GetUInt32Value(UNIT_FIELD_MAXHEALTH);
+}
+
+void Unit::SetHealth(uint32_t health)
+{
+    SetUInt32Value(UNIT_FIELD_HEALTH, health);
+}
+
+void Unit::SetMaxHealth(uint32_t maxHealth)
+{
+    // unit has to have at least 1 health point
+    if (maxHealth == 0)
+        maxHealth = 1;
+
+    SetUInt32Value(UNIT_FIELD_MAXHEALTH, maxHealth);
+}
+
+uint32_t Unit::GetFaction()
+{
+    return GetUInt32Value(UNIT_FIELD_FACTION);
+}
+
+void Unit::SetFaction(uint32_t faction)
+{
+    SetUInt32Value(UNIT_FIELD_FACTION, faction);
+}

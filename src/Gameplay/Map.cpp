@@ -22,8 +22,10 @@
 #include "Map.h"
 #include "SmartPacket.h"
 #include "Player.h"
+#include "Creature.h"
 #include "MapManager.h"
 #include "MapStorage.h"
+#include "CreatureStorage.h"
 
 Map::Map(uint32_t id, MapRecord* mapTemplate) : m_mapId(id), m_storedMapRecord(mapTemplate)
 {
@@ -48,6 +50,20 @@ void Map::InitContents()
     m_objects.resize(csizeX);
     for (uint32_t i = 0; i < csizeX; i++)
         m_objects[i].resize(csizeY);
+
+    // retrieve creature spawns
+    CreatureSpawnList crList;
+    sCreatureStorage->GetCreatureSpawnsForMap(m_mapId, crList);
+
+    // put creatures on map
+    Creature* cr;
+    for (CreatureSpawnRecord& rec : crList)
+    {
+        cr = new Creature();
+        cr->Create(rec.guid, rec.id);
+        cr->SetInitialPositionAfterLoad(rec.positionMap, rec.positionX, rec.positionY);
+        AddToMap(cr);
+    }
 }
 
 void Map::AddToMap(WorldObject* obj)

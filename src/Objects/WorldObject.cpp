@@ -286,3 +286,13 @@ const char* WorldObject::GetName()
 {
     return m_name.c_str();
 }
+
+uint32_t WorldObject::GetImageId()
+{
+    return GetUInt32Value(OBJECT_FIELD_IMAGEID);
+}
+
+void WorldObject::SetImageId(uint32_t imageId)
+{
+    SetUInt32Value(OBJECT_FIELD_IMAGEID, imageId);
+}

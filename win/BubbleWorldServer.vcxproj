@@ -164,6 +164,7 @@
     <ClCompile Include="..\src\Services\AuthenticationService.cpp" />
     <ClCompile Include="..\src\Services\ResourceStreamService.cpp" />
     <ClCompile Include="..\src\Storage\CharacterStorage.cpp" />
+    <ClCompile Include="..\src\Storage\CreatureStorage.cpp" />
     <ClCompile Include="..\src\Storage\DatabaseConnection.cpp" />
     <ClCompile Include="..\src\Storage\MapStorage.cpp" />
     <ClCompile Include="..\src\Storage\ResourceStorage.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="..\src\Services\AuthenticationService.h" />
     <ClInclude Include="..\src\Services\ResourceStreamService.h" />
     <ClInclude Include="..\src\Storage\CharacterStorage.h" />
+    <ClInclude Include="..\src\Storage\CreatureStorage.h" />
     <ClInclude Include="..\src\Storage\DatabaseConnection.h" />
     <ClInclude Include="..\src\Storage\MapStorage.h" />
     <ClInclude Include="..\src\Storage\ResourceStorage.h" />

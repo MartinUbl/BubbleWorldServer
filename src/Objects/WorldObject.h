@@ -159,6 +159,10 @@ class WorldObject
         void TeleportTo(uint32_t mapId, float x, float y);
         // sets position within map after loading process complete
         void SetInitialPositionAfterLoad(uint32_t mapId, float x, float y);
+        // retrieves current object image
+        uint32_t GetImageId();
+        // sets object image
+        void SetImageId(uint32_t imageId);
 
     protected:
         // protected constructor; instantiate child class

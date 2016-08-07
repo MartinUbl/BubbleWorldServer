@@ -27,6 +27,7 @@
 #include "Log.h"
 #include "MapStorage.h"
 #include "MapManager.h"
+#include "CreatureStorage.h"
 
 #include <thread>
 
@@ -68,6 +69,9 @@ bool Application::Init(int argc, char** argv)
     sLog->Info(">> Verifying map and map chunk checksums...");
     sMapStorage->VerifyChecksums();
     sLog->Info("Finished checksum verification");
+    sLog->Info("");
+
+    sCreatureStorage->LoadFromDB();
     sLog->Info("");
 
     // some messages?
