@@ -62,6 +62,7 @@ enum Opcodes
     SP_MOVE_HEARTBEAT                           = 36,
     CP_CHAT_MESSAGE                             = 37,
     SP_CHAT_MESSAGE                             = 38,
+    CP_INTERACTION_REQUEST                      = 39,
     MAX_OPCODES
 };
 

@@ -80,6 +80,8 @@ class WorldObject
         virtual void Update();
         // builds create packet block to be sent to player
         virtual void BuildCreatePacketBlock(SmartPacket &pkt);
+        // builds update packet block to be sent to player
+        virtual void BuildUpdatePacketBlock(SmartPacket &pkt);
 
         // retrieves object GUID
         uint64_t GetGUID();

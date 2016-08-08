@@ -50,7 +50,47 @@ void WorldObject::Create(uint64_t guid)
 
 void WorldObject::Update()
 {
-    //
+    // if some of updatefields was changed, send update to sorroundings
+    if (m_updateFieldsNeedsUpdate)
+    {
+        SmartPacket pkt(SP_UPDATE_OBJECT);
+        BuildUpdatePacketBlock(pkt);
+        SendPacketToSorroundings(pkt);
+
+        m_updateFieldsNeedsUpdate = false;
+    }
+}
+
+void WorldObject::BuildUpdatePacketBlock(SmartPacket &pkt)
+{
+    // write GUID to allow client to identify one specific object
+    pkt.WriteUInt64(GetGUID());
+
+    uint16_t pos = pkt.GetWritePos();
+    // placeholder for count
+    pkt.WriteUInt8(0);
+
+    uint8_t fieldCount = 0;
+
+    // go through all updatefields, determine if they need to be updated, and send those who do
+    for (uint32_t pos = 0; pos < m_maxUpdateFieldIndex; pos++)
+    {
+        if ((m_updateFieldsChangeBits[pos / 32] & (1 << (pos % 32))) != 0)
+        {
+            // write field that needs update
+            pkt.WriteUInt32(pos);
+            pkt.WriteUInt32(m_updateFields[pos]);
+
+            // clear that bit
+            m_updateFieldsChangeBits[pos / 32] &= ~(1 << (pos % 32));
+
+            // increase count to be written to packet
+            fieldCount++;
+        }
+    }
+
+    // finally write field count
+    pkt.WriteUInt8At(fieldCount, pos);
 }
 
 void WorldObject::BuildCreatePacketBlock(SmartPacket &pkt)
@@ -105,6 +145,7 @@ Creature* WorldObject::ToCreature()
 void WorldObject::SetUpdateFieldUpdateNeeded(uint32_t field)
 {
     m_updateFieldsChangeBits[field / 32] |= 1 << (field % 32);
+    m_updateFieldsNeedsUpdate = true;
 }
 
 void WorldObject::SendPacketToSorroundings(SmartPacket &pkt)

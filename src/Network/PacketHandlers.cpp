@@ -441,3 +441,16 @@ void PacketHandlers::HandleChatMessage(Session* sess, SmartPacket& packet)
 
     sess->GetPlayer()->Talk((TalkType)type, msg.c_str());
 }
+
+void PacketHandlers::HandleInteractionRequest(Session* sess, SmartPacket& packet)
+{
+    uint64_t guid = packet.ReadUInt64();
+
+    WorldObject* obj = sObjectAccessor->FindWorldObject(guid);
+    if (!obj)
+        return;
+
+    // TODO: distance check
+
+    // TODO: real interaction, talk, quests, etc.
+}
