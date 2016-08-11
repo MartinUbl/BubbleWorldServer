@@ -66,8 +66,6 @@ static const uint32_t movementAnims[] = {
 
 // this is the number which we use to multiply movement vector
 #define MOVEMENT_UPDATE_UNIT_FRACTION 0.001f
-// delay between two movement heartbeat packets
-#define MOVEMENT_HEARTBEAT_SEND_DELAY 1000
 
 enum MapFieldType;
 
@@ -94,6 +92,8 @@ class Unit : public WorldObject
         void StopMoving(MoveDirectionElement dir);
         // is unit moving?
         bool IsMoving();
+        // get movement mask
+        uint8_t GetMoveMask();
 
         // talk using specified talk type and supplied string
         void Talk(TalkType type, const char* str);
@@ -123,8 +123,6 @@ class Unit : public WorldObject
     private:
         // movement mask - in which direction is the unit moving
         uint8_t m_moveMask;
-        // timer used for heartbeat packets timing
-        uint32_t m_moveHeartbeatTimer;
         // last time of movement update
         uint32_t m_lastMovementUpdate;
         // move vector used for movement interpolation

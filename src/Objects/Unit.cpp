@@ -28,7 +28,6 @@
 Unit::Unit(ObjectType type) : WorldObject(type)
 {
     m_moveMask = 0;
-    m_moveHeartbeatTimer = 0;
     m_lastMovementUpdate = 0;
 }
 
@@ -76,19 +75,6 @@ void Unit::Update()
                 m_position.y = oldY;
 
             m_lastMovementUpdate = msNow;
-        }
-
-        // send movement heartbeat to sorroundings if needed
-        if (getMSTimeDiff(m_moveHeartbeatTimer, msNow) >= MOVEMENT_HEARTBEAT_SEND_DELAY)
-        {
-            SmartPacket pkt(SP_MOVE_HEARTBEAT);
-            pkt.WriteUInt64(GetGUID());
-            pkt.WriteUInt8(m_moveMask);
-            pkt.WriteFloat(GetPositionX());
-            pkt.WriteFloat(GetPositionY());
-            SendPacketToSorroundings(pkt);
-
-            m_moveHeartbeatTimer = msNow;
         }
     }
 }
@@ -144,10 +130,7 @@ void Unit::StartMoving(MoveDirectionElement dir)
 
     // if started movement, set timers for movement update
     if (m_moveMask == 0)
-    {
         m_lastMovementUpdate = getMSTime();
-        m_moveHeartbeatTimer = getMSTime();
-    }
 
     m_moveMask |= dir;
     UpdateMovementVector();
@@ -172,6 +155,11 @@ void Unit::StopMoving(MoveDirectionElement dir)
 bool Unit::IsMoving()
 {
     return m_moveMask != 0;
+}
+
+uint8_t Unit::GetMoveMask()
+{
+    return m_moveMask;
 }
 
 void Unit::UpdateMovementVector()

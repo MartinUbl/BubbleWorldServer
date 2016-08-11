@@ -433,7 +433,18 @@ void PacketHandlers::HandleMoveHeartbeat(Session* sess, SmartPacket& packet)
 
     // TODO: verify if this is possible, anticheat, etc.
 
-    sess->GetPlayer()->SetPosition(x, y);
+    Player* plr = sess->GetPlayer();
+
+    plr->SetPosition(x, y);
+
+    // TODO: timer, limit maximum count of heartbeats per second
+
+    SmartPacket pkt(SP_MOVE_HEARTBEAT);
+    pkt.WriteUInt64(plr->GetGUID());
+    pkt.WriteUInt8(plr->GetMoveMask());
+    pkt.WriteFloat(x);
+    pkt.WriteFloat(y);
+    plr->SendPacketToSorroundings(pkt);
 }
 
 void PacketHandlers::HandleChatMessage(Session* sess, SmartPacket& packet)
