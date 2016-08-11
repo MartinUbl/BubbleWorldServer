@@ -73,6 +73,14 @@ struct ImageResourceMetadata
     uint32_t baseCenterX;
     // image centering point Y coordinate
     uint32_t baseCenterY;
+    // upper-left corner of collision box (X coordinate)
+    uint32_t collisionX1;
+    // upper-left corner of collision box (Y coordinate)
+    uint32_t collisionY1;
+    // bottom-right corner of collision box (X coordinate)
+    uint32_t collisionX2;
+    // bottom-right corner of collision box (Y coordinate)
+    uint32_t collisionY2;
     // metadata checksum
     std::string checksum;
 

@@ -347,6 +347,10 @@ void PacketHandlers::HandleGetImageMetadata(Session* sess, SmartPacket& packet)
     pkt.WriteUInt32(meta->sizeY);
     pkt.WriteUInt32(meta->baseCenterX);
     pkt.WriteUInt32(meta->baseCenterY);
+    pkt.WriteUInt32(meta->collisionX1);
+    pkt.WriteUInt32(meta->collisionY1);
+    pkt.WriteUInt32(meta->collisionX2);
+    pkt.WriteUInt32(meta->collisionY2);
 
     // send animations
     pkt.WriteUInt32((uint32_t)meta->animations.size());

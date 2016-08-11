@@ -64,7 +64,7 @@ void ResourceStorage::LoadFromDB()
 
     // load image metadata records
     sLog->Info(">> Loading image resource metadata...");
-    res = sMainDatabase.Query("SELECT id, size_x, size_y, base_center_x, base_center_y, checksum FROM resource_images_metadata;");
+    res = sMainDatabase.Query("SELECT id, size_x, size_y, base_center_x, base_center_y, collision_x1, collision_y1, collision_x2, collision_y2, checksum FROM resource_images_metadata;");
     count = 0;
     while (res.FetchRow())
     {
@@ -74,7 +74,11 @@ void ResourceStorage::LoadFromDB()
         m_imageMetadata[id].sizeY = res.GetUInt32(2);
         m_imageMetadata[id].baseCenterX = res.GetUInt32(3);
         m_imageMetadata[id].baseCenterY = res.GetUInt32(4);
-        m_imageMetadata[id].checksum = res.GetString(5).c_str();
+        m_imageMetadata[id].collisionX1 = res.GetUInt32(5);
+        m_imageMetadata[id].collisionY1 = res.GetUInt32(6);
+        m_imageMetadata[id].collisionX2 = res.GetUInt32(7);
+        m_imageMetadata[id].collisionY2 = res.GetUInt32(8);
+        m_imageMetadata[id].checksum = res.GetString(9).c_str();
         count++;
     }
     sLog->Info("Loaded %u image resources metadata", count);
@@ -153,6 +157,10 @@ void ResourceStorage::VerifyChecksums()
         crc = CRC32_Bytes_Continuous((uint8_t*)&meta->sizeY, sizeof(uint32_t), crc);
         crc = CRC32_Bytes_Continuous((uint8_t*)&meta->baseCenterX, sizeof(uint32_t), crc);
         crc = CRC32_Bytes_Continuous((uint8_t*)&meta->baseCenterY, sizeof(uint32_t), crc);
+        crc = CRC32_Bytes_Continuous((uint8_t*)&meta->collisionX1, sizeof(uint32_t), crc);
+        crc = CRC32_Bytes_Continuous((uint8_t*)&meta->collisionY1, sizeof(uint32_t), crc);
+        crc = CRC32_Bytes_Continuous((uint8_t*)&meta->collisionX2, sizeof(uint32_t), crc);
+        crc = CRC32_Bytes_Continuous((uint8_t*)&meta->collisionY2, sizeof(uint32_t), crc);
 
         // also perform checksum calculation on animation data
         for (ImageAnimationMap::iterator aitr = meta->animations.begin(); aitr != meta->animations.end(); ++aitr)
