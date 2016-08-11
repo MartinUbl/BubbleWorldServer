@@ -71,7 +71,10 @@ bool DBResult::FetchRow()
 int DBResult::_GetIntValue(int column)
 {
     if (row)
-        return std::stoi(row[column]);
+    {
+        char* val = _GetColumnValue(column);
+        return val ? std::stoi(row[column]) : 0;
+    }
 
     sLog->Error("Attempt to retrieve field without fetched row!");
     return 0;
@@ -80,7 +83,10 @@ int DBResult::_GetIntValue(int column)
 long long DBResult::_GetLongValue(int column)
 {
     if (row)
-        return std::stoll(row[column]);
+    {
+        char* val = _GetColumnValue(column);
+        return val ? std::stoll(row[column]) : 0LL;
+    }
 
     sLog->Error("Attempt to retrieve field without fetched row!");
     return 0;
@@ -129,7 +135,10 @@ int64_t DBResult::GetInt64(int column)
 float DBResult::GetFloat(int column)
 {
     if (row)
-        return std::stof(row[column]);
+    {
+        char* val = _GetColumnValue(column);
+        return val ? std::stof(val) : 0.0f;
+    }
 
     sLog->Error("Attempt to retrieve field without fetched row!");
     return 0.0f;
@@ -138,10 +147,25 @@ float DBResult::GetFloat(int column)
 std::string DBResult::GetString(int column)
 {
     if (row)
-        return row[column] ? row[column] : "";
+    {
+        char* val = _GetColumnValue(column);
+        return val ? val : "";
+    }
 
     sLog->Error("Attempt to retrieve field without fetched row!");
     return "";
+}
+
+char* DBResult::_GetColumnValue(int column)
+{
+    if (row[column])
+    {
+        m_columnNull = false;
+        return row[column];
+    }
+
+    m_columnNull = true;
+    return nullptr;
 }
 
 void DBResult::Finalize()

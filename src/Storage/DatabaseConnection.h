@@ -58,6 +58,8 @@ struct DBResult
     std::string GetString(int column = 0);
     // retrieves float value
     float GetFloat(int column = 0);
+    // retrieves raw column value
+    char* _GetColumnValue(int column);
 
     // base for retrieving int value
     int _GetIntValue(int column = 0);
@@ -77,6 +79,8 @@ struct DBResult
     bool m_doNotDestroy;
     // is valid result?
     bool m_valid;
+    // is last retrieved column NULL?
+    bool m_columnNull;
 };
 
 /*
