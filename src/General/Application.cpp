@@ -28,6 +28,7 @@
 #include "MapStorage.h"
 #include "MapManager.h"
 #include "CreatureStorage.h"
+#include "GameobjectStorage.h"
 
 #include <thread>
 
@@ -72,6 +73,9 @@ bool Application::Init(int argc, char** argv)
     sLog->Info("");
 
     sCreatureStorage->LoadFromDB();
+    sLog->Info("");
+
+    sGameobjectStorage->LoadFromDB();
     sLog->Info("");
 
     // some messages?

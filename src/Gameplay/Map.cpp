@@ -23,9 +23,11 @@
 #include "SmartPacket.h"
 #include "Player.h"
 #include "Creature.h"
+#include "Gameobject.h"
 #include "MapManager.h"
 #include "MapStorage.h"
 #include "CreatureStorage.h"
+#include "GameobjectStorage.h"
 
 Map::Map(uint32_t id, MapRecord* mapTemplate) : m_mapId(id), m_storedMapRecord(mapTemplate)
 {
@@ -63,6 +65,20 @@ void Map::InitContents()
         cr->Create(rec.guid, rec.id);
         cr->SetInitialPositionAfterLoad(rec.positionMap, rec.positionX, rec.positionY);
         AddToMap(cr);
+    }
+
+    // retrieve gameobject spawns
+    GameobjectSpawnList goList;
+    sGameobjectStorage->GetGameobjectSpawnsForMap(m_mapId, goList);
+
+    // put gameobjects on map
+    Gameobject* go;
+    for (GameobjectSpawnRecord& rec : goList)
+    {
+        go = new Gameobject();
+        go->Create(rec.guid, rec.id);
+        go->SetInitialPositionAfterLoad(rec.positionMap, rec.positionX, rec.positionY);
+        AddToMap(go);
     }
 }
 

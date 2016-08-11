@@ -97,6 +97,12 @@
     <ClCompile Include="..\src\Storage\CreatureStorage.cpp">
       <Filter>src\Storage</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Storage\GameobjectStorage.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Gameobject.cpp">
+      <Filter>src\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\General\Application.h">
@@ -194,6 +200,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Storage\CreatureStorage.h">
       <Filter>src\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\GameobjectStorage.h">
+      <Filter>src\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Gameobject.h">
+      <Filter>src\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

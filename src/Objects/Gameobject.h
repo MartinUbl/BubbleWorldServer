@@ -17,19 +17,23 @@
  * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#ifndef BW_CREATURE_H
-#define BW_CREATURE_H
+#ifndef BW_GAMEOBJECT_H
+#define BW_GAMEOBJECT_H
 
-#include "Unit.h"
+#include "WorldObject.h"
+
+class SmartPacket;
 
 /*
- * Class representing NPC object in game
+ * Class representing static game object in game
  */
-class Creature : public Unit
+class Gameobject : public WorldObject
 {
     public:
-        Creature();
-        virtual ~Creature();
+        Gameobject();
+        virtual ~Gameobject();
+
+        virtual void BuildCreatePacketBlock(SmartPacket &pkt);
 
         virtual void Create(uint32_t guidLow, uint32_t entry);
 
