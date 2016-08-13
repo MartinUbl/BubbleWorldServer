@@ -51,6 +51,11 @@
 // how many object updates should be in single packet
 #define UPDATEPACKET_COUNT_LIMIT 50
 
+// width of map field
+#define MAP_FIELD_PX_SIZE_X 32
+// height of map field
+#define MAP_FIELD_PX_SIZE_Y 32
+
 // type of map field
 enum MapFieldType
 {

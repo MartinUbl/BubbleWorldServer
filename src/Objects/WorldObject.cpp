@@ -25,6 +25,7 @@
 #include "Creature.h"
 #include "SmartPacket.h"
 #include "ObjectAccessor.h"
+#include "ResourceStorage.h"
 
 WorldObject::WorldObject(ObjectType type) : m_position(0.0f, 0.0f), m_positionMap(0), m_objectType(type)
 {
@@ -336,4 +337,77 @@ uint32_t WorldObject::GetImageId()
 void WorldObject::SetImageId(uint32_t imageId)
 {
     SetUInt32Value(OBJECT_FIELD_IMAGEID, imageId);
+}
+
+float WorldObject::GetMinimumBoxDistance(WorldObject* other)
+{
+    ImageResourceMetadata* meta = sResourceStorage->GetImageMetadata(GetUInt32Value(OBJECT_FIELD_IMAGEID));
+    ImageResourceMetadata* objmeta = sResourceStorage->GetImageMetadata(other->GetUInt32Value(OBJECT_FIELD_IMAGEID));
+
+    if (!meta || !objmeta)
+        return GetPosition().GetDistance(other->GetPosition());
+
+    float Ax1, Ay1, Ax2, Ay2;
+    float Bx1, By1, Bx2, By2;
+
+    Ax1 = GetPositionX() - meta->unitBaseX + meta->unitCollisionX1;
+    Ay1 = GetPositionY() - meta->unitBaseY + meta->unitCollisionY1;
+    Ax2 = GetPositionX() - meta->unitBaseX + meta->unitCollisionX2;
+    Ay2 = GetPositionY() - meta->unitBaseY + meta->unitCollisionY2;
+
+    Bx1 = other->GetPositionX() - objmeta->unitBaseX + objmeta->unitCollisionX1;
+    By1 = other->GetPositionY() - objmeta->unitBaseY + objmeta->unitCollisionY1;
+    Bx2 = other->GetPositionX() - objmeta->unitBaseX + objmeta->unitCollisionX2;
+    By2 = other->GetPositionY() - objmeta->unitBaseY + objmeta->unitCollisionY2;
+
+    // is Y projection overlapping?
+    if ((Ay1 > By1 && Ay1 < By2) || (Ay2 > By1 && Ay2 < By2) || (Ay1 < By1 && Ay2 > By2))
+    {
+        // A on the left of B
+        if (Ax2 < Bx1)
+            return Bx1 - Ax2;
+        // A on the right of B
+        else if (Ax1 > Bx2)
+            return Ax1 - Bx2;
+        // A overlapping with B
+        else
+            return 0.0f;
+    }
+
+    // is X projection overlapping?
+    if ((Ax1 > Bx1 && Ax1 < Bx2) || (Ax2 > Bx1 && Ax2 < Bx2) || (Ax1 < Bx1 && Ax2 > Bx2))
+    {
+        // A above B
+        if (Ay2 < By1)
+            return By1 - Ay2;
+        // A below B
+        else if (Ay1 > By2)
+            return Ay1 - By2;
+        // A overlapping with B (should be caught by previous condition set)
+        else
+            return 0.0f;
+    }
+
+    // no orthogonal projection overlap, determine quadrant and calculate euclidean distance between two points
+
+    // on the left; mathematically 2. and 3. quadrant
+    if (Ax1 < Bx1)
+    {
+        // A above B, 2. quadrant
+        if (Ay2 < By1)
+            return Position(Ax2, Ay2).GetDistance(Position(Bx1, By1));
+        // A below B, 3. quadrant
+        else
+            return Position(Ax2, Ay1).GetDistance(Position(Bx1, By2));
+    }
+    // on the right; mathematically 1. and 4. quadrant
+    else
+    {
+        // A above B, 1. quadrant
+        if (Ay2 < By1)
+            return Position(Ax1, Ay2).GetDistance(Position(Bx2, By1));
+        // A below B, 4. quadrant
+        else
+            return Position(Ax1, Ay1).GetDistance(Position(Bx2, By2));
+    }
 }

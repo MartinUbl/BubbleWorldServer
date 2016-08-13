@@ -49,7 +49,7 @@ struct Position
     friend Position operator-(const Position &posA, const Position &posB) { return Position(posA.x - posB.x, posA.y - posB.y); }
 
     // calculates distance between two positions
-    float GetDistance(Position &pos)
+    float GetDistance(Position const& pos) const
     {
         return sqrt((pos.x - x)*(pos.x - x) + (pos.y - y)*(pos.y - y));
     }
@@ -165,6 +165,8 @@ class WorldObject
         uint32_t GetImageId();
         // sets object image
         void SetImageId(uint32_t imageId);
+        // retrieves minimum distance between two collision boxes
+        float GetMinimumBoxDistance(WorldObject* other);
 
     protected:
         // protected constructor; instantiate child class

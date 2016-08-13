@@ -21,6 +21,7 @@
 #define BW_RESOURCESTORAGE_H
 
 #include "Singleton.h"
+#include "MapEnums.h"
 
 /*
  * Structure containing resource base information
@@ -86,6 +87,29 @@ struct ImageResourceMetadata
 
     // loaded animations
     ImageAnimationMap animations;
+    // collision box converted from pixels to game units (upper-left X coordinate)
+    float unitCollisionX1;
+    // collision box converted from pixels to game units (upper-left Y coordinate)
+    float unitCollisionY1;
+    // collision box converted from pixels to game units (bottom-right X coordinate)
+    float unitCollisionX2;
+    // collision box converted from pixels to game units (bottom-right Y coordinate)
+    float unitCollisionY2;
+    // converted base center X from pixels to game units
+    float unitBaseX;
+    // converted base center Y from pixels to game units
+    float unitBaseY;
+
+    // calculates collision box in game units, not in pixels
+    void CalculateUnitCollisionBox()
+    {
+        unitCollisionX1 = (float)collisionX1 / MAP_FIELD_PX_SIZE_X;
+        unitCollisionY1 = (float)collisionY1 / MAP_FIELD_PX_SIZE_Y;
+        unitCollisionX2 = (float)collisionX2 / MAP_FIELD_PX_SIZE_X;
+        unitCollisionY2 = (float)collisionY2 / MAP_FIELD_PX_SIZE_Y;
+        unitBaseX = (float)baseCenterX / MAP_FIELD_PX_SIZE_X;
+        unitBaseY = (float)baseCenterY / MAP_FIELD_PX_SIZE_Y;
+    }
 };
 
 typedef std::map<uint32_t, ImageResourceMetadata> ImageMetadataMap;

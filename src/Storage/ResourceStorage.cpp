@@ -80,6 +80,8 @@ void ResourceStorage::LoadFromDB()
         m_imageMetadata[id].collisionY2 = res.GetUInt32(8);
         m_imageMetadata[id].checksum = res.GetString(9).c_str();
         count++;
+
+        m_imageMetadata[id].CalculateUnitCollisionBox();
     }
     sLog->Info("Loaded %u image resources metadata", count);
     sLog->Info("");
