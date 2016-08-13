@@ -26,6 +26,7 @@
 #include "ResourceStorage.h"
 #include "CharacterStorage.h"
 #include "Player.h"
+#include "Creature.h"
 #include "MapManager.h"
 #include "MapStorage.h"
 #include "Log.h"
@@ -467,5 +468,6 @@ void PacketHandlers::HandleInteractionRequest(Session* sess, SmartPacket& packet
 
     // TODO: distance check
 
-    // TODO: real interaction, talk, quests, etc.
+    if (obj->GetType() == OTYPE_CREATURE)
+        obj->ToCreature()->Interact(sess->GetPlayer());
 }

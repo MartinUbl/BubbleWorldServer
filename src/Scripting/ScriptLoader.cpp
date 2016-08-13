@@ -17,36 +17,13 @@
  * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#ifndef BW_CREATURE_H
-#define BW_CREATURE_H
+#include "General.h"
+#include "ScriptManager.h"
 
-#include "Unit.h"
+extern void ScriptLoader_BasicTalkNPC();
 
-class CreatureScript;
-class Player;
-
-/*
- * Class representing NPC object in game
- */
-class Creature : public Unit
+// loads all present scripts
+void LoadScripts()
 {
-    public:
-        Creature();
-        virtual ~Creature();
-
-        virtual void Create(uint32_t guidLow, uint32_t entry);
-
-        virtual void Update();
-
-        virtual void Interact(Player* player);
-
-    protected:
-        virtual void CreateUpdateFields();
-
-        CreatureScript* m_script;
-
-    private:
-        //
-};
-
-#endif
+    ScriptLoader_BasicTalkNPC();
+}

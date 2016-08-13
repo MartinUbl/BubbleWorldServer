@@ -39,6 +39,8 @@ struct CreatureTemplateRecord
     uint32_t faction;
     // base health
     uint32_t health;
+    // name of script the creature uses
+    std::string scriptName;
 };
 
 typedef std::unordered_map<uint32_t, CreatureTemplateRecord> CreatureTemplateMap;

@@ -29,6 +29,7 @@
 #include "MapManager.h"
 #include "CreatureStorage.h"
 #include "GameobjectStorage.h"
+#include "ScriptManager.h"
 
 #include <thread>
 
@@ -81,7 +82,8 @@ bool Application::Init(int argc, char** argv)
     // some messages?
     sResourceStreamService->Init();
 
-    // TODO: init gameplay layer
+    sScriptManager->Initialize();
+    sLog->Info("");
 
     sLog->Info(">> Initializing networking layer...");
     if (!sNetwork->Init(DEFAULT_NET_BIND_ADDR, DEFAULT_NET_BIND_PORT))

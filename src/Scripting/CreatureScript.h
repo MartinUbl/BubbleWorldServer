@@ -17,33 +17,36 @@
  * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#ifndef BW_CREATURE_H
-#define BW_CREATURE_H
+#ifndef BW_CREATURE_SCRIPT_H
+#define BW_CREATURE_SCRIPT_H
 
-#include "Unit.h"
-
-class CreatureScript;
+class Creature;
 class Player;
 
 /*
- * Class representing NPC object in game
+ * Class containing all script methods ready to be overriden by child classes
  */
-class Creature : public Unit
+class CreatureScript
 {
     public:
-        Creature();
-        virtual ~Creature();
+        virtual ~CreatureScript();
 
-        virtual void Create(uint32_t guidLow, uint32_t entry);
+        // called when the script is created (hooked to new creature instance)
+        virtual void OnCreate() {};
+        // called when the creature gets updated
+        virtual void OnUpdate() {};
+        // called when player interacts with creature
+        virtual void OnInteract(Player*) {};
 
-        virtual void Update();
-
-        virtual void Interact(Player* player);
+        // performs talk event with all needed conversions, etc.
+        void ScriptSay(const wchar_t* msg, Player* target = nullptr);
 
     protected:
-        virtual void CreateUpdateFields();
+        // protected constructor; instantiate child classes only
+        CreatureScript(Creature* c);
 
-        CreatureScript* m_script;
+        // pointer to script owner
+        Creature* self;
 
     private:
         //

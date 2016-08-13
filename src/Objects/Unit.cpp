@@ -24,6 +24,7 @@
 #include "Log.h"
 #include "Map.h"
 #include "MapStorage.h"
+#include "Player.h"
 
 Unit::Unit(ObjectType type) : WorldObject(type)
 {
@@ -186,6 +187,15 @@ void Unit::Talk(TalkType type, const char* str)
     pkt.WriteUInt64(GetGUID());
     pkt.WriteString(str);
     SendPacketToSorroundings(pkt);
+}
+
+void Unit::TalkTo(TalkType type, const char* str, Player* target)
+{
+    SmartPacket pkt(SP_CHAT_MESSAGE);
+    pkt.WriteUInt8(type);
+    pkt.WriteUInt64(GetGUID());
+    pkt.WriteString(str);
+    target->SendPacketToMe(pkt);
 }
 
 uint32_t Unit::GetHealth()

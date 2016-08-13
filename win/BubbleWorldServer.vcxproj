@@ -27,13 +27,13 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -84,7 +84,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -98,7 +98,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -114,7 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -132,7 +132,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -162,6 +162,10 @@
     <ClCompile Include="..\src\Objects\Player.cpp" />
     <ClCompile Include="..\src\Objects\Unit.cpp" />
     <ClCompile Include="..\src\Objects\WorldObject.cpp" />
+    <ClCompile Include="..\src\Scripting\CreatureScript.cpp" />
+    <ClCompile Include="..\src\Scripting\ScriptLoader.cpp" />
+    <ClCompile Include="..\src\Scripting\ScriptManager.cpp" />
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicTalkNPC.cpp" />
     <ClCompile Include="..\src\Services\AuthenticationService.cpp" />
     <ClCompile Include="..\src\Services\ResourceStreamService.cpp" />
     <ClCompile Include="..\src\Storage\CharacterStorage.cpp" />
@@ -198,6 +202,8 @@
     <ClInclude Include="..\src\Objects\Unit.h" />
     <ClInclude Include="..\src\Objects\UpdateFields.h" />
     <ClInclude Include="..\src\Objects\WorldObject.h" />
+    <ClInclude Include="..\src\Scripting\CreatureScript.h" />
+    <ClInclude Include="..\src\Scripting\ScriptManager.h" />
     <ClInclude Include="..\src\Services\AuthenticationService.h" />
     <ClInclude Include="..\src\Services\ResourceStreamService.h" />
     <ClInclude Include="..\src\Storage\CharacterStorage.h" />

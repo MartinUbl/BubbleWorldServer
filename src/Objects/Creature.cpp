@@ -21,10 +21,13 @@
 #include "Creature.h"
 #include "CreatureStorage.h"
 #include "Log.h"
+#include "CreatureScript.h"
+#include "ScriptManager.h"
+#include "Player.h"
 
 Creature::Creature() : Unit(OTYPE_CREATURE)
 {
-    //
+    m_script = nullptr;
 }
 
 Creature::~Creature()
@@ -49,11 +52,27 @@ void Creature::Create(uint32_t guidLow, uint32_t entry)
     SetFaction(rec->faction);
     SetMaxHealth(rec->health);
     SetHealth(rec->health);
+
+    if (rec->scriptName.size() > 0)
+    {
+        m_script = sScriptManager->CreateScript(rec->scriptName.c_str(), this);
+        if (m_script)
+            m_script->OnCreate();
+    }
 }
 
 void Creature::Update()
 {
     Unit::Update();
+
+    if (m_script)
+        m_script->OnUpdate();
+}
+
+void Creature::Interact(Player* player)
+{
+    if (m_script)
+        m_script->OnInteract(player);
 }
 
 void Creature::CreateUpdateFields()

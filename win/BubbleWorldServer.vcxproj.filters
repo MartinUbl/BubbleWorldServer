@@ -23,6 +23,12 @@
     <Filter Include="src\Objects">
       <UniqueIdentifier>{00fe84cf-d299-49e4-bf3e-b28c0bb184c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scripting">
+      <UniqueIdentifier>{3610ff40-7843-4b85-a608-7fe23f877c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scripting\TestingScripts">
+      <UniqueIdentifier>{a3498806-bcdc-426b-8018-0b18eb009fb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\General\Application.cpp">
@@ -102,6 +108,18 @@
     </ClCompile>
     <ClCompile Include="..\src\Objects\Gameobject.cpp">
       <Filter>src\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scripting\CreatureScript.cpp">
+      <Filter>src\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scripting\ScriptManager.cpp">
+      <Filter>src\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicTalkNPC.cpp">
+      <Filter>src\Scripting\TestingScripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scripting\ScriptLoader.cpp">
+      <Filter>src\Scripting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +224,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Objects\Gameobject.h">
       <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Scripting\CreatureScript.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Scripting\ScriptManager.h">
+      <Filter>src\Scripting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

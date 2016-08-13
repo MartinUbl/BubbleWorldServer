@@ -17,36 +17,27 @@
  * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#ifndef BW_CREATURE_H
-#define BW_CREATURE_H
+#include "General.h"
+#include "CreatureScript.h"
+#include "Creature.h"
 
-#include "Unit.h"
-
-class CreatureScript;
-class Player;
-
-/*
- * Class representing NPC object in game
- */
-class Creature : public Unit
+CreatureScript::CreatureScript(Creature* c) : self(c)
 {
-    public:
-        Creature();
-        virtual ~Creature();
+    //
+}
 
-        virtual void Create(uint32_t guidLow, uint32_t entry);
+CreatureScript::~CreatureScript()
+{
+    //
+}
 
-        virtual void Update();
+void CreatureScript::ScriptSay(const wchar_t* msg, Player* target)
+{
+    // messages hardcoded into scripts are encoded in some internal encoding,
+    // so perform conversion to UTF-8 using generic function
 
-        virtual void Interact(Player* player);
-
-    protected:
-        virtual void CreateUpdateFields();
-
-        CreatureScript* m_script;
-
-    private:
-        //
-};
-
-#endif
+    if (target)
+        self->TalkTo(TALK_SAY, WStringToUTF8(msg).c_str(), target);
+    else
+        self->Talk(TALK_SAY, WStringToUTF8(msg).c_str());
+}

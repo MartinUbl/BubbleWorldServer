@@ -97,6 +97,8 @@ class Unit : public WorldObject
 
         // talk using specified talk type and supplied string
         void Talk(TalkType type, const char* str);
+        // talk using specified talk type and supplied string; sent only to one target
+        void TalkTo(TalkType type, const char* str, Player* target);
         // can the unit move over this field type?
         bool CanMoveOn(MapFieldType type, uint32_t flags);
         // retrieves unit current health

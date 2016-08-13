@@ -33,8 +33,8 @@
 #define SOCKETCONNABORT  WSAECONNABORTED
 #define SOCKETINPROGRESS WSAEINPROGRESS
 #define LASTERROR() WSAGetLastError()
-#define INET_PTON(fam,addrptr,buff) InetPton(fam,addrptr,buff)
-#define INET_NTOP(fam,addrptr,buff,socksize) InetNtop(fam,addrptr,buff,socksize)
+#define INET_PTON(fam,addrptr,buff) InetPtonA(fam,addrptr,buff)
+#define INET_NTOP(fam,addrptr,buff,socksize) InetNtopA(fam,addrptr,buff,socksize)
 #define CLOSESOCKET closesocket
 #else
 #include <sys/types.h>

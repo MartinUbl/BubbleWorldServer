@@ -37,7 +37,7 @@ void CreatureStorage::LoadFromDB()
     uint32_t count, id;
 
     sLog->Info(">> Loading creature template records...");
-    DBResult res = sMainDatabase.Query("SELECT id, name, level, image_id, faction, health FROM creature_template;");
+    DBResult res = sMainDatabase.Query("SELECT id, name, level, image_id, faction, health, script_name FROM creature_template;");
     count = 0;
     while (res.FetchRow())
     {
@@ -48,6 +48,7 @@ void CreatureStorage::LoadFromDB()
         m_creatureTemplateMap[id].imageId = res.GetUInt32(3);
         m_creatureTemplateMap[id].faction = res.GetUInt32(4);
         m_creatureTemplateMap[id].health = res.GetUInt32(5);
+        m_creatureTemplateMap[id].scriptName = res.GetString(6);
         count++;
     }
     sLog->Info("Loaded %u creature template records", count);
