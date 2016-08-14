@@ -75,7 +75,7 @@ DialogueStateRecord* DialogueHolder::GetDialogueState(uint64_t playerGuid)
     return &m_dialogueStateMap[playerGuid];
 }
 
-void DialogueHolder::StartDialogue(uint64_t playerGuid)
+void DialogueHolder::StartDialogue(uint64_t playerGuid, uint32_t actionId)
 {
     // clear the state
     m_dialogueStateMap[playerGuid].sourceGuid = playerGuid;
@@ -94,7 +94,7 @@ void DialogueHolder::StartDialogue(uint64_t playerGuid)
     }
 
     // start dialogue
-    MoveToAction(playerGuid, m_startingAction);
+    MoveToAction(playerGuid, (actionId == UINT32_MAX) ? m_startingAction : actionId);
 }
 
 void DialogueHolder::DialogueDecision(uint64_t playerGuid, uint32_t decision)

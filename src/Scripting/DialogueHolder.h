@@ -133,7 +133,7 @@ class DialogueHolder
         // retrieves dialogue state for one player
         DialogueStateRecord* GetDialogueState(uint64_t playerGuid);
         // starts dialogue for one player; clears his record
-        void StartDialogue(uint64_t playerGuid);
+        void StartDialogue(uint64_t playerGuid, uint32_t actionId = UINT32_MAX);
         // registers player decision, and moves dialogue further
         void DialogueDecision(uint64_t playerGuid, uint32_t decision);
         // ends dialogue for one player; erases the record from state map
