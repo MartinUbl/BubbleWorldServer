@@ -471,3 +471,20 @@ void PacketHandlers::HandleInteractionRequest(Session* sess, SmartPacket& packet
     if (obj->GetType() == OTYPE_CREATURE)
         obj->ToCreature()->Interact(sess->GetPlayer());
 }
+
+void PacketHandlers::HandleDialogueDecision(Session* sess, SmartPacket& packet)
+{
+    uint64_t guid = packet.ReadUInt64();
+    uint32_t decision = packet.ReadUInt32();
+
+    WorldObject* obj = sObjectAccessor->FindWorldObject(guid);
+    // if the object is not found, or is not creature, send dialogue close packet
+    if (!obj || obj->GetType() != OTYPE_CREATURE)
+    {
+        SmartPacket pkt(SP_DIALOGUE_CLOSE);
+        sess->SendPacket(pkt);
+        return;
+    }
+
+    obj->ToCreature()->DialogueDecision(sess->GetPlayer(), decision);
+}

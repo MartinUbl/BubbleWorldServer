@@ -63,6 +63,9 @@ enum Opcodes
     CP_CHAT_MESSAGE                             = 37,
     SP_CHAT_MESSAGE                             = 38,
     CP_INTERACTION_REQUEST                      = 39,
+    SP_DIALOGUE_DATA                            = 40,
+    CP_DIALOGUE_DECISION                        = 41,
+    SP_DIALOGUE_CLOSE                           = 42,
     MAX_OPCODES
 };
 

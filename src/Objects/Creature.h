@@ -39,6 +39,7 @@ class Creature : public Unit
         virtual void Update();
 
         virtual void Interact(Player* player);
+        virtual void DialogueDecision(Player* player, uint32_t decision);
 
     protected:
         virtual void CreateUpdateFields();

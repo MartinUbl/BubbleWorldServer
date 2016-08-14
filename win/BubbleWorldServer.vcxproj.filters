@@ -121,6 +121,12 @@
     <ClCompile Include="..\src\Scripting\ScriptLoader.cpp">
       <Filter>src\Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicDialogueNPC.cpp">
+      <Filter>src\Scripting\TestingScripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scripting\DialogueHolder.cpp">
+      <Filter>src\Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\General\Application.h">
@@ -229,6 +235,9 @@
       <Filter>src\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Scripting\ScriptManager.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Scripting\DialogueHolder.h">
       <Filter>src\Scripting</Filter>
     </ClInclude>
   </ItemGroup>

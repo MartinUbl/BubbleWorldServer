@@ -75,6 +75,12 @@ void Creature::Interact(Player* player)
         m_script->OnInteract(player);
 }
 
+void Creature::DialogueDecision(Player* player, uint32_t decision)
+{
+    if (m_script)
+        m_script->OnDialogueDecision(player, decision);
+}
+
 void Creature::CreateUpdateFields()
 {
     m_maxUpdateFieldIndex = UNIT_FIELDS_END;

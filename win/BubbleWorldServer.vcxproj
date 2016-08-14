@@ -163,8 +163,10 @@
     <ClCompile Include="..\src\Objects\Unit.cpp" />
     <ClCompile Include="..\src\Objects\WorldObject.cpp" />
     <ClCompile Include="..\src\Scripting\CreatureScript.cpp" />
+    <ClCompile Include="..\src\Scripting\DialogueHolder.cpp" />
     <ClCompile Include="..\src\Scripting\ScriptLoader.cpp" />
     <ClCompile Include="..\src\Scripting\ScriptManager.cpp" />
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicDialogueNPC.cpp" />
     <ClCompile Include="..\src\Scripting\TestingScripts\BasicTalkNPC.cpp" />
     <ClCompile Include="..\src\Services\AuthenticationService.cpp" />
     <ClCompile Include="..\src\Services\ResourceStreamService.cpp" />
@@ -203,6 +205,7 @@
     <ClInclude Include="..\src\Objects\UpdateFields.h" />
     <ClInclude Include="..\src\Objects\WorldObject.h" />
     <ClInclude Include="..\src\Scripting\CreatureScript.h" />
+    <ClInclude Include="..\src\Scripting\DialogueHolder.h" />
     <ClInclude Include="..\src\Scripting\ScriptManager.h" />
     <ClInclude Include="..\src\Services\AuthenticationService.h" />
     <ClInclude Include="..\src\Services\ResourceStreamService.h" />

@@ -21,9 +21,11 @@
 #include "ScriptManager.h"
 
 extern void ScriptLoader_BasicTalkNPC();
+extern void ScriptLoader_BasicDialogueNPC();
 
 // loads all present scripts
 void LoadScripts()
 {
     ScriptLoader_BasicTalkNPC();
+    ScriptLoader_BasicDialogueNPC();
 }

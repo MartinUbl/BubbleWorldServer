@@ -71,4 +71,11 @@ enum TalkType
     TALK_SERVER_MESSAGE = 2,
 };
 
+// state of dialogue with NPC
+enum DialogueState
+{
+    DIALOGUE_DECIDE = 0,
+    DIALOGUE_WAIT = 1,
+};
+
 #endif

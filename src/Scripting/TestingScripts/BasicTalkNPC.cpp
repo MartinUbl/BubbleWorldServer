@@ -31,12 +31,12 @@ class BasicTalkNPC : public CreatureScript
     public:
         BasicTalkNPC(Creature* c) : CreatureScript(c) { }
 
-        void OnCreate()
+        void OnCreate() override
         {
             m_testSayTime = 0;
         }
 
-        void OnUpdate()
+        void OnUpdate() override
         {
             // timer example
 
@@ -54,7 +54,7 @@ class BasicTalkNPC : public CreatureScript
             }
         }
 
-        void OnInteract(Player* pl)
+        void OnInteract(Player* pl) override
         {
             ScriptSay(L"Teï mluví skript!");
             // start timer

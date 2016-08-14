@@ -20,6 +20,8 @@
 #ifndef BW_CREATURE_SCRIPT_H
 #define BW_CREATURE_SCRIPT_H
 
+#include "DialogueHolder.h"
+
 class Creature;
 class Player;
 
@@ -36,7 +38,9 @@ class CreatureScript
         // called when the creature gets updated
         virtual void OnUpdate() {};
         // called when player interacts with creature
-        virtual void OnInteract(Player*) {};
+        virtual void OnInteract(Player* /*source*/) {};
+        // called when player made dialogue decision
+        virtual void OnDialogueDecision(Player* /*source*/, uint32_t /*decision*/) {};
 
         // performs talk event with all needed conversions, etc.
         void ScriptSay(const wchar_t* msg, Player* target = nullptr);
