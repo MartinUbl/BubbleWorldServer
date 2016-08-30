@@ -84,7 +84,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/Objects/Movement;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -98,7 +98,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/Objects/Movement;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -114,7 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/Objects/Movement;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -132,7 +132,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mysql\mysql-5.7\include;../src/Gameplay;../src/Objects;../src/Objects/Movement;../src/General;../src/Network;../src/Storage;../src/Services;../src/Scripting</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>mysqlcppconn_EXPORTS;CPPCONN_PUBLIC_FUNC=;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -159,6 +159,12 @@
     <ClCompile Include="..\src\Network\SmartPacket.cpp" />
     <ClCompile Include="..\src\Objects\Creature.cpp" />
     <ClCompile Include="..\src\Objects\Gameobject.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\IdleMovementGenerator.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\MotionMaster.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\MovementGeneratorBase.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\Pathfinding.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\PointMovementGenerator.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\WaypointMovementGenerator.cpp" />
     <ClCompile Include="..\src\Objects\Player.cpp" />
     <ClCompile Include="..\src\Objects\Unit.cpp" />
     <ClCompile Include="..\src\Objects\WorldObject.cpp" />
@@ -168,6 +174,7 @@
     <ClCompile Include="..\src\Scripting\ScriptManager.cpp" />
     <ClCompile Include="..\src\Scripting\TestingScripts\BasicDialogueNPC.cpp" />
     <ClCompile Include="..\src\Scripting\TestingScripts\BasicTalkNPC.cpp" />
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicWalkNPC.cpp" />
     <ClCompile Include="..\src\Services\AuthenticationService.cpp" />
     <ClCompile Include="..\src\Services\ResourceStreamService.cpp" />
     <ClCompile Include="..\src\Storage\CharacterStorage.cpp" />
@@ -199,6 +206,12 @@
     <ClInclude Include="..\src\Objects\AnimEnums.h" />
     <ClInclude Include="..\src\Objects\Creature.h" />
     <ClInclude Include="..\src\Objects\Gameobject.h" />
+    <ClInclude Include="..\src\Objects\Movement\IdleMovementGenerator.h" />
+    <ClInclude Include="..\src\Objects\Movement\MotionMaster.h" />
+    <ClInclude Include="..\src\Objects\Movement\MovementGeneratorBase.h" />
+    <ClInclude Include="..\src\Objects\Movement\Pathfinding.h" />
+    <ClInclude Include="..\src\Objects\Movement\PointMovementGenerator.h" />
+    <ClInclude Include="..\src\Objects\Movement\WaypointMovementGenerator.h" />
     <ClInclude Include="..\src\Objects\ObjectEnums.h" />
     <ClInclude Include="..\src\Objects\Player.h" />
     <ClInclude Include="..\src\Objects\Unit.h" />

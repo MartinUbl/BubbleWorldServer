@@ -18,16 +18,17 @@
  **/
 
 #include "General.h"
-#include "ScriptManager.h"
+#include "Unit.h"
+#include "MotionMaster.h"
+#include "MovementGeneratorBase.h"
+#include "WaypointMovementGenerator.h"
 
-extern void ScriptLoader_BasicTalkNPC();
-extern void ScriptLoader_BasicDialogueNPC();
-extern void ScriptLoader_BasicWalkNPC();
-
-// loads all present scripts
-void LoadScripts()
+WaypointMovementGenerator::WaypointMovementGenerator(Unit* owner) : MovementGeneratorBase(owner, MOVEMENT_WAYPOINT)
 {
-    ScriptLoader_BasicTalkNPC();
-    ScriptLoader_BasicDialogueNPC();
-    ScriptLoader_BasicWalkNPC();
+    //
+}
+
+WaypointMovementGenerator::~WaypointMovementGenerator()
+{
+    //
 }

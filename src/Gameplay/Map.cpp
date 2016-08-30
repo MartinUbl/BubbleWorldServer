@@ -28,6 +28,7 @@
 #include "MapStorage.h"
 #include "CreatureStorage.h"
 #include "GameobjectStorage.h"
+#include "Log.h"
 
 Map::Map(uint32_t id, MapRecord* mapTemplate) : m_mapId(id), m_storedMapRecord(mapTemplate)
 {
@@ -52,6 +53,21 @@ void Map::InitContents()
     m_objects.resize(csizeX);
     for (uint32_t i = 0; i < csizeX; i++)
         m_objects[i].resize(csizeY);
+
+    // prepare pathfinding layer
+    m_pathfindLayer.resize(m_storedMapRecord->header.sizeX);
+    for (uint32_t i = 0; i < m_storedMapRecord->header.sizeX; i++)
+        m_pathfindLayer[i].resize(m_storedMapRecord->header.sizeY);
+
+    // fill base pathfinding map
+    for (uint32_t i = 0; i < m_storedMapRecord->header.sizeX; i++)
+    {
+        for (uint32_t j = 0; j < m_storedMapRecord->header.sizeY; j++)
+        {
+            MapField* fld = GetFieldAbs(i, j);
+            m_pathfindLayer[i][j].moveType = GetMovementTypeMaskFor(fld);
+        }
+    }
 
     // retrieve creature spawns
     CreatureSpawnList crList;
@@ -102,6 +118,10 @@ void Map::AddToMap(WorldObject* obj)
     // if it's player, create sorroundings for him
     if (obj->GetType() == OTYPE_PLAYER)
         SendCreateSorroundings(obj->ToPlayer());
+
+    // if it's gameobject, put it into pathfinding map also
+    if (obj->GetType() == OTYPE_GAMEOBJECT)
+        EnablePathfindCollision(obj);
 }
 
 void Map::RemoveFromMap(WorldObject* obj)
@@ -111,6 +131,10 @@ void Map::RemoveFromMap(WorldObject* obj)
     // retrieve cell position
     cx = GetCellIndexX(obj->GetPositionX());
     cy = GetCellIndexY(obj->GetPositionY());
+
+    // if it's gameobject, remove it from pathfinding map
+    if (obj->GetType() == OTYPE_GAMEOBJECT)
+        DisablePathfindCollision(obj);
 
     // find him in cell and erase him
     for (WorldObjectList::iterator itr = m_objects[cx][cy].begin(); itr != m_objects[cx][cy].end(); ++itr)
@@ -177,6 +201,76 @@ void Map::Relocate(WorldObject* obj, float oldX, float oldY, float newX, float n
             SendCellCreatePacketsFor(itX, itY, obj);
         }
     }
+}
+
+void Map::EnablePathfindCollision(WorldObject* obj)
+{
+    float sizeX = obj->GetBoxUnitSizeX();
+    float sizeY = obj->GetBoxUnitSizeY();
+
+    float startX = obj->GetPositionX() - sizeX / 2.0f;
+    float endX = startX + sizeX;
+    float startY = obj->GetPositionY() - sizeY / 2.0f;
+    float endY = startY + sizeY;
+
+    for (uint32_t i = (uint32_t)startX; i <= (uint32_t)endX; i++)
+    {
+        for (uint32_t j = (uint32_t)startY; j <= (uint32_t)endY; j++)
+        {
+            PathfindField* fld = GetPathfindField(i, j);
+            if (!fld)
+                continue;
+
+            fld->m_obstacleGUIDs.insert(obj->GetGUID());
+            // turn off all movement here, leave just "NONE" flag if present
+            fld->moveType &= (1 << MOVEMENT_TYPE_NONE);
+
+            sLog->Info("Marking field %u : %u as non-walkable (%u)", i, j, fld->moveType);
+        }
+    }
+}
+
+void Map::DisablePathfindCollision(WorldObject* obj)
+{
+    float sizeX = obj->GetBoxUnitSizeX();
+    float sizeY = obj->GetBoxUnitSizeY();
+
+    float startX = obj->GetPositionX() + obj->GetBoxUnitCenterX() - sizeX / 2;
+    float endX = startX + sizeX;
+    float startY = obj->GetPositionY() + obj->GetBoxUnitCenterY() - sizeY / 2;
+    float endY = startY + sizeY;
+
+    for (uint32_t i = (uint32_t)startX; i < (uint32_t)endX; i++)
+    {
+        for (uint32_t j = (uint32_t)startY; j < (uint32_t)endY; j++)
+        {
+            PathfindField* fld = GetPathfindField(i, j);
+            if (!fld)
+                continue;
+
+            fld->m_obstacleGUIDs.erase(obj->GetGUID());
+            // if we are removing last obstacle, and the field was not marked solid before, restore original move mask
+            if (fld->m_obstacleGUIDs.size() == 0 && (fld->moveType & (1 << MOVEMENT_TYPE_NONE)) != 0)
+                fld->moveType = GetMovementTypeMaskFor(GetFieldAbs(i, j));
+        }
+    }
+}
+
+uint32_t Map::GetMovementTypeMaskFor(MapField* fld)
+{
+    uint32_t typeMask = 0;
+
+    if (fld->type == MFT_SOLID)
+        typeMask |= 1 << MOVEMENT_TYPE_NONE;
+    else
+    {
+        if (fld->type == MFT_GROUND)
+            typeMask |= 1 << MOVEMENT_TYPE_WALK;
+        if (fld->type == MFT_WATER || fld->type == MFT_LAVA)
+            typeMask |= 1 << MOVEMENT_TYPE_SWIM;
+    }
+
+    return typeMask;
 }
 
 void Map::SendCellCreatePacketsFor(uint32_t cellX, uint32_t cellY, WorldObject* wobj)
@@ -326,6 +420,34 @@ MapField* Map::GetField(float x, float y)
     iY = target->GetFieldOffsetY((uint32_t)y);
 
     return &target->fields[iX][iY];
+}
+
+MapField* Map::GetFieldAbs(uint32_t x, uint32_t y)
+{
+    uint32_t iX = x / MAP_CELL_SIZE_X;
+    uint32_t iY = y / MAP_CELL_SIZE_Y;
+
+    if (m_storedMapRecord->chunks.size() <= iX)
+        return nullptr;
+    if (m_storedMapRecord->chunks[iX].size() <= iY)
+        return nullptr;
+
+    MapChunkRecord* target = &m_storedMapRecord->chunks[iX][iY];
+
+    iX = target->GetFieldOffsetX(x);
+    iY = target->GetFieldOffsetY(y);
+
+    return &target->fields[iX][iY];
+}
+
+PathfindField* Map::GetPathfindField(uint32_t x, uint32_t y)
+{
+    if (m_pathfindLayer.size() <= x)
+        return nullptr;
+    if (m_pathfindLayer[x].size() <= y)
+        return nullptr;
+
+    return &m_pathfindLayer[x][y];
 }
 
 void Map::GetCellSorroundingLimits(uint32_t cellX, uint32_t cellY, uint32_t &beginX, uint32_t &beginY, uint32_t &endX, uint32_t &endY)

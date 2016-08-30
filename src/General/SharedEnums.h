@@ -78,4 +78,12 @@ enum DialogueState
     DIALOGUE_WAIT = 1,
 };
 
+// type of movement
+enum MovementType
+{
+    MOVEMENT_TYPE_NONE = 0,
+    MOVEMENT_TYPE_WALK = 1,
+    MOVEMENT_TYPE_SWIM = 2,
+};
+
 #endif

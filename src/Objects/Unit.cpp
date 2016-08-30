@@ -25,8 +25,9 @@
 #include "Map.h"
 #include "MapStorage.h"
 #include "Player.h"
+#include "MotionMaster.h"
 
-Unit::Unit(ObjectType type) : WorldObject(type)
+Unit::Unit(ObjectType type) : WorldObject(type), m_motionMaster(this)
 {
     m_moveMask = 0;
     m_lastMovementUpdate = 0;
@@ -45,6 +46,8 @@ void Unit::Create(uint64_t guid)
 void Unit::Update()
 {
     WorldObject::Update();
+
+    m_motionMaster.Update();
 
     // update movement if the unit is moving
     if (IsMoving())
@@ -230,4 +233,9 @@ uint32_t Unit::GetFaction()
 void Unit::SetFaction(uint32_t faction)
 {
     SetUInt32Value(UNIT_FIELD_FACTION, faction);
+}
+
+MotionMaster& Unit::GetMotionMaster()
+{
+    return m_motionMaster;
 }

@@ -17,17 +17,25 @@
  * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "General.h"
-#include "ScriptManager.h"
+#ifndef BW_IDLEMOVEMENTGENERATOR_H
+#define BW_IDLEMOVEMENTGENERATOR_H
 
-extern void ScriptLoader_BasicTalkNPC();
-extern void ScriptLoader_BasicDialogueNPC();
-extern void ScriptLoader_BasicWalkNPC();
+#include "MovementGeneratorBase.h"
 
-// loads all present scripts
-void LoadScripts()
+/*
+ * Class representing movement generator that does not generate any movement (idle)
+ */
+class IdleMovementGenerator : public MovementGeneratorBase
 {
-    ScriptLoader_BasicTalkNPC();
-    ScriptLoader_BasicDialogueNPC();
-    ScriptLoader_BasicWalkNPC();
-}
+    public:
+        IdleMovementGenerator(Unit* owner);
+        virtual ~IdleMovementGenerator();
+
+    protected:
+        //
+
+    private:
+        //
+};
+
+#endif

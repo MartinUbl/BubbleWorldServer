@@ -60,6 +60,21 @@ struct Position
     float y;
 };
 
+
+/*
+* Structure containing data about one motion point
+*/
+struct MotionPoint
+{
+    MotionPoint(float _x, float _y, uint8_t _moveMask) : position(_x, _y), moveMask(_moveMask) {};
+    MotionPoint(Position const& _pos, uint8_t _moveMask) : position(_pos), moveMask(_moveMask) {};
+
+    // point position
+    Position position;
+    // move mask that needs to be set to reach it
+    uint8_t moveMask;
+};
+
 class Unit;
 class Player;
 class Creature;
@@ -167,6 +182,14 @@ class WorldObject
         void SetImageId(uint32_t imageId);
         // retrieves minimum distance between two collision boxes
         float GetMinimumBoxDistance(WorldObject* other);
+        // retrieves box X width (unit size, not pixels)
+        float GetBoxUnitSizeX();
+        // retrieves box Y height (unit size, not pixels)
+        float GetBoxUnitSizeY();
+        // retrieves box center X (unit size, not pixels; relative to left side)
+        float GetBoxUnitCenterX();
+        // retrieves box center Y (unit size, not pixels; relative to top side)
+        float GetBoxUnitCenterY();
 
     protected:
         // protected constructor; instantiate child class

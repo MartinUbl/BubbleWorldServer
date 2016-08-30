@@ -17,17 +17,33 @@
  * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "General.h"
-#include "ScriptManager.h"
+#ifndef BW_POINTMOVEMENTGENERATOR_H
+#define BW_POINTMOVEMENTGENERATOR_H
 
-extern void ScriptLoader_BasicTalkNPC();
-extern void ScriptLoader_BasicDialogueNPC();
-extern void ScriptLoader_BasicWalkNPC();
+#include "MovementGeneratorBase.h"
 
-// loads all present scripts
-void LoadScripts()
+class Unit;
+
+/*
+ * Class representing motion generator for static destination targetted movement
+ */
+class PointMovementGenerator : public MovementGeneratorBase
 {
-    ScriptLoader_BasicTalkNPC();
-    ScriptLoader_BasicDialogueNPC();
-    ScriptLoader_BasicWalkNPC();
-}
+    public:
+        PointMovementGenerator(Unit* owner);
+        virtual ~PointMovementGenerator();
+
+        // sets target coordinates
+        void SetTarget(float x, float y);
+
+        virtual void PointReached(uint32_t id);
+
+    protected:
+        // original target we wanted to reach
+        Position m_originalTarget;
+
+    private:
+        //
+};
+
+#endif

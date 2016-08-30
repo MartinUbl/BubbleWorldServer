@@ -29,6 +29,9 @@
     <Filter Include="src\Scripting\TestingScripts">
       <UniqueIdentifier>{a3498806-bcdc-426b-8018-0b18eb009fb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Objects\Movement">
+      <UniqueIdentifier>{fa00f3d6-a717-4199-b4ef-6e08de5d8b45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\General\Application.cpp">
@@ -126,6 +129,27 @@
     </ClCompile>
     <ClCompile Include="..\src\Scripting\DialogueHolder.cpp">
       <Filter>src\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicWalkNPC.cpp">
+      <Filter>src\Scripting\TestingScripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Movement\IdleMovementGenerator.cpp">
+      <Filter>src\Objects\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Movement\MotionMaster.cpp">
+      <Filter>src\Objects\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Movement\MovementGeneratorBase.cpp">
+      <Filter>src\Objects\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Movement\Pathfinding.cpp">
+      <Filter>src\Objects\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Movement\WaypointMovementGenerator.cpp">
+      <Filter>src\Objects\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\Movement\PointMovementGenerator.cpp">
+      <Filter>src\Objects\Movement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +263,24 @@
     </ClInclude>
     <ClInclude Include="..\src\Scripting\DialogueHolder.h">
       <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Movement\IdleMovementGenerator.h">
+      <Filter>src\Objects\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Movement\MotionMaster.h">
+      <Filter>src\Objects\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Movement\MovementGeneratorBase.h">
+      <Filter>src\Objects\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Movement\Pathfinding.h">
+      <Filter>src\Objects\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Movement\WaypointMovementGenerator.h">
+      <Filter>src\Objects\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Movement\PointMovementGenerator.h">
+      <Filter>src\Objects\Movement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

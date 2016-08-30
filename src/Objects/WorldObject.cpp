@@ -341,8 +341,8 @@ void WorldObject::SetImageId(uint32_t imageId)
 
 float WorldObject::GetMinimumBoxDistance(WorldObject* other)
 {
-    ImageResourceMetadata* meta = sResourceStorage->GetImageMetadata(GetUInt32Value(OBJECT_FIELD_IMAGEID));
-    ImageResourceMetadata* objmeta = sResourceStorage->GetImageMetadata(other->GetUInt32Value(OBJECT_FIELD_IMAGEID));
+    ImageResourceMetadata* meta = sResourceStorage->GetImageMetadata(GetImageId());
+    ImageResourceMetadata* objmeta = sResourceStorage->GetImageMetadata(other->GetImageId());
 
     if (!meta || !objmeta)
         return GetPosition().GetDistance(other->GetPosition());
@@ -410,4 +410,28 @@ float WorldObject::GetMinimumBoxDistance(WorldObject* other)
         else
             return Position(Ax1, Ay1).GetDistance(Position(Bx2, By2));
     }
+}
+
+float WorldObject::GetBoxUnitSizeX()
+{
+    ImageResourceMetadata* meta = sResourceStorage->GetImageMetadata(GetImageId());
+    return meta ? meta->unitCollisionX2 - meta->unitCollisionX1 : 0.0f;
+}
+
+float WorldObject::GetBoxUnitSizeY()
+{
+    ImageResourceMetadata* meta = sResourceStorage->GetImageMetadata(GetImageId());
+    return meta ? meta->unitCollisionY2 - meta->unitCollisionY1 : 0.0f;
+}
+
+float WorldObject::GetBoxUnitCenterX()
+{
+    ImageResourceMetadata* meta = sResourceStorage->GetImageMetadata(GetImageId());
+    return meta ? meta->unitBaseX : 0.0f;
+}
+
+float WorldObject::GetBoxUnitCenterY()
+{
+    ImageResourceMetadata* meta = sResourceStorage->GetImageMetadata(GetImageId());
+    return meta ? meta->unitBaseY : 0.0f;
 }

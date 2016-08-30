@@ -23,6 +23,7 @@
 #include "WorldObject.h"
 #include "AnimEnums.h"
 #include "Vector2.h"
+#include "MotionMaster.h"
 
 // movement angles used for movement vector calculations
 static const float movementAngles[] = {
@@ -68,6 +69,7 @@ static const uint32_t movementAnims[] = {
 #define MOVEMENT_UPDATE_UNIT_FRACTION 0.001f
 
 enum MapFieldType;
+class MotionMaster;
 
 /*
  * Class representing every "living" object in game
@@ -114,6 +116,9 @@ class Unit : public WorldObject
         // sets unit faction
         void SetFaction(uint32_t faction);
 
+        // retrieves motion master instance reference
+        MotionMaster& GetMotionMaster();
+
     protected:
         // protected constructor; instantiate child classes
         Unit(ObjectType type);
@@ -129,6 +134,8 @@ class Unit : public WorldObject
         uint32_t m_lastMovementUpdate;
         // move vector used for movement interpolation
         Vector2 m_moveVector;
+        // motion master instance
+        MotionMaster m_motionMaster;
 };
 
 #endif

@@ -18,16 +18,17 @@
  **/
 
 #include "General.h"
-#include "ScriptManager.h"
+#include "MotionMaster.h"
+#include "MovementGeneratorBase.h"
+#include "IdleMovementGenerator.h"
+#include "Unit.h"
 
-extern void ScriptLoader_BasicTalkNPC();
-extern void ScriptLoader_BasicDialogueNPC();
-extern void ScriptLoader_BasicWalkNPC();
-
-// loads all present scripts
-void LoadScripts()
+IdleMovementGenerator::IdleMovementGenerator(Unit* owner) : MovementGeneratorBase(owner, MOVEMENT_IDLE)
 {
-    ScriptLoader_BasicTalkNPC();
-    ScriptLoader_BasicDialogueNPC();
-    ScriptLoader_BasicWalkNPC();
+    //
+}
+
+IdleMovementGenerator::~IdleMovementGenerator()
+{
+    //
 }

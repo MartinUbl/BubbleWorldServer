@@ -22,6 +22,20 @@
 
 #include "MapEnums.h"
 
+/*
+ * Structure containing data used when searching for path
+ */
+struct PathfindField
+{
+    // movement type allowed here (see enum MovementType); if "NONE" flag is present, the field is marked solid by map definition, not by obstacle present
+    uint32_t moveType;
+    // GUIDs of dynamic obstacles
+    std::set<uint64_t> m_obstacleGUIDs;
+};
+
+typedef std::vector<PathfindField> PathfindFieldRow;
+typedef std::vector<PathfindFieldRow> PathfindMap;
+
 struct MapRecord;
 struct MapField;
 class WorldObject;
@@ -51,6 +65,13 @@ class Map
         void RemoveFromMap(WorldObject* obj);
         // relocates object within map
         void Relocate(WorldObject* obj, float oldX, float oldY, float newX, float newY);
+
+        // adds object to pathfinding map
+        void EnablePathfindCollision(WorldObject* obj);
+        // removes object from pathfinding map
+        void DisablePathfindCollision(WorldObject* obj);
+        // retrieves possible movement type for field supplied
+        uint32_t GetMovementTypeMaskFor(MapField* fld);
 
         // update objects on map
         virtual void Update();
@@ -84,8 +105,15 @@ class Map
         // when object leaves cell, delete him for objects there, and delete objects for him
         void SendCellDeletePacketsFor(uint32_t cellX, uint32_t cellY, WorldObject* wobj);
 
-        // retrieves map field
+        // retrieves map field using game continuous coordinates
         MapField* GetField(float x, float y);
+        // retrieves map field using absolute indexes
+        MapField* GetFieldAbs(uint32_t x, uint32_t y);
+        // retrieves pathfinding map field; thread unsafe, use pathfindLayerMutex!
+        PathfindField* GetPathfindField(uint32_t x, uint32_t y);
+
+        // mutex lock used when pathfinding is in progress (locks pathfind layer)
+        std::mutex pathfindLayerMutex;
 
     protected:
         //
@@ -97,6 +125,8 @@ class Map
         MapRecord* m_storedMapRecord;
         // objects in map; key1 = cellX, key2 = cellY
         WorldObjectMap m_objects;
+        // pathfinding layer
+        PathfindMap m_pathfindLayer;
 };
 
 #endif

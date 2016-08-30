@@ -17,17 +17,29 @@
  * along with BubbleWorld. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "General.h"
-#include "ScriptManager.h"
+#ifndef BW_WAYPOINTMOVEMENTGENERATOR_H
+#define BW_WAYPOINTMOVEMENTGENERATOR_H
 
-extern void ScriptLoader_BasicTalkNPC();
-extern void ScriptLoader_BasicDialogueNPC();
-extern void ScriptLoader_BasicWalkNPC();
+#include "MovementGeneratorBase.h"
 
-// loads all present scripts
-void LoadScripts()
+class Unit;
+
+/*
+ * Class representing motion generator for waypoint movement (technically multiple point movements)
+ */
+class WaypointMovementGenerator : public MovementGeneratorBase
 {
-    ScriptLoader_BasicTalkNPC();
-    ScriptLoader_BasicDialogueNPC();
-    ScriptLoader_BasicWalkNPC();
-}
+    public:
+        WaypointMovementGenerator(Unit* owner);
+        virtual ~WaypointMovementGenerator();
+
+        // Not yet implemented
+
+    protected:
+        //
+
+    private:
+        //
+};
+
+#endif
