@@ -33,6 +33,12 @@ class PointMovementGenerator : public MovementGeneratorBase
         PointMovementGenerator(Unit* owner);
         virtual ~PointMovementGenerator();
 
+        virtual void Finalize();
+
+        // sets point ID which should then be sent to parent and/or AI
+        void SetPointId(uint32_t id);
+        // retrieves target point ID
+        uint32_t GetPointId();
         // sets target coordinates
         void SetTarget(float x, float y);
 
@@ -41,6 +47,8 @@ class PointMovementGenerator : public MovementGeneratorBase
     protected:
         // original target we wanted to reach
         Position m_originalTarget;
+        // point of ID we are heading towards (waypoint, not path segment)
+        uint32_t m_pointId;
 
     private:
         //

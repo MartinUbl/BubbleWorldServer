@@ -26,6 +26,12 @@ struct MotionPoint;
 
 typedef std::vector<MotionPoint> MotionPointVector;
 
+enum ChildMovementGeneratorSignal
+{
+    MOVEMENT_SIGNAL_POINT_REACHED = 1,              // child movement generator successfully finished movement
+    MOVEMENT_SIGNAL_CANNOT_REACH_POINT = 2,         // child movement generator signals target point is unreachable by the unit
+};
+
 /*
  * Class representing movement generator - used as base for other generators
  */
@@ -37,6 +43,13 @@ class MovementGeneratorBase
         // retrieves motion generator type
         MotionType GetType();
 
+        // sets the flag for composite child (child of some other motion generator)
+        void SetCompositeChildFlag(bool flag, MovementGeneratorBase* parent);
+        // is child of some other motion generator?
+        bool IsCompositeChild();
+        // is the movement stopped for now?
+        bool IsStopped();
+
         // called when the motion generator is created and applied on Unit
         virtual void Initialize();
         // called on every motion update tick
@@ -45,6 +58,10 @@ class MovementGeneratorBase
         virtual void Finalize();
         // called when any point in movement was reached (i.e. when the direction has to change, ..)
         virtual void PointReached(uint32_t id);
+        // terminates movement generator routine and falls back to default movement for that unit
+        virtual void TerminateMovement();
+        // receives signal from child movement generator
+        virtual void ReceiveChildSignal(uint32_t signalId, uint32_t param);
 
     protected:
         // protected constructor; instantiate child classes only
@@ -71,8 +88,14 @@ class MovementGeneratorBase
         // flags from pathfinder stored
         uint32_t m_pathfinderFlags;
 
+        // parent movement generator
+        MovementGeneratorBase* m_parent;
+
     private:
-        //
+        // is child of some other motion generator?
+        bool m_isCompositeChild;
+        // is the movement stopped now?
+        bool m_stopped;
 };
 
 #endif

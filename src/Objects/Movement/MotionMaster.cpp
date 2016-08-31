@@ -24,6 +24,7 @@
 #include "IdleMovementGenerator.h"
 #include "PointMovementGenerator.h"
 #include "WaypointMovementGenerator.h"
+#include "Log.h"
 
 MotionMaster::MotionMaster(Unit* owner) : m_owner(owner)
 {
@@ -69,6 +70,15 @@ void MotionMaster::MovePoint(float x, float y)
         PointMovementGenerator* gen = ChangeTo<PointMovementGenerator>();
 
         gen->SetTarget(x, y);
+    };
+}
+
+void MotionMaster::MoveWaypointPath(uint32_t pathId)
+{
+    m_movementGeneratorChangeLambda = [this, pathId]() {
+        WaypointMovementGenerator* gen = ChangeTo<WaypointMovementGenerator>();
+
+        gen->StartWaypointPathId(pathId);
     };
 }
 

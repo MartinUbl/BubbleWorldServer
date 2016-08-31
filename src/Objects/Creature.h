@@ -34,17 +34,26 @@ class Creature : public Unit
         Creature();
         virtual ~Creature();
 
+        // sets creature spawn position
+        void SetSpawnPosition(float x, float y);
+        // retrieves creature spawn position
+        Position const& GetSpawnPosition();
+
         virtual void Create(uint32_t guidLow, uint32_t entry);
 
         virtual void Update();
 
         virtual void Interact(Player* player);
         virtual void DialogueDecision(Player* player, uint32_t decision);
+        virtual void MovementGeneratorPointReached(uint32_t pointId);
 
     protected:
         virtual void CreateUpdateFields();
 
+        // creature script, if any
         CreatureScript* m_script;
+        // position where the creature was originally spawned
+        Position m_spawnPosition;
 
     private:
         //

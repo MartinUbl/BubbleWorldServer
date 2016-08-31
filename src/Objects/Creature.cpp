@@ -28,6 +28,7 @@
 Creature::Creature() : Unit(OTYPE_CREATURE)
 {
     m_script = nullptr;
+    SetSpawnPosition(0, 0);
 }
 
 Creature::~Creature()
@@ -81,6 +82,12 @@ void Creature::DialogueDecision(Player* player, uint32_t decision)
         m_script->OnDialogueDecision(player, decision);
 }
 
+void Creature::MovementGeneratorPointReached(uint32_t pointId)
+{
+    if (m_script)
+        m_script->OnMovementPointReached(pointId);
+}
+
 void Creature::CreateUpdateFields()
 {
     m_maxUpdateFieldIndex = UNIT_FIELDS_END;
@@ -92,4 +99,15 @@ void Creature::CreateUpdateFields()
     memset(m_updateFieldsChangeBits, 0, sizeof(uint32_t) * (1 + (m_maxUpdateFieldIndex / 32)));
 
     Unit::CreateUpdateFields();
+}
+
+void Creature::SetSpawnPosition(float x, float y)
+{
+    m_spawnPosition.x = x;
+    m_spawnPosition.y = y;
+}
+
+Position const& Creature::GetSpawnPosition()
+{
+    return m_spawnPosition;
 }

@@ -30,6 +30,7 @@
 #include "CreatureStorage.h"
 #include "GameobjectStorage.h"
 #include "ScriptManager.h"
+#include "WaypointStorage.h"
 
 #include <thread>
 
@@ -77,6 +78,9 @@ bool Application::Init(int argc, char** argv)
     sLog->Info("");
 
     sGameobjectStorage->LoadFromDB();
+    sLog->Info("");
+
+    sWaypointStorage->LoadFromDB();
     sLog->Info("");
 
     // some messages?

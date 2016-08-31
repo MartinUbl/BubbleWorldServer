@@ -53,6 +53,8 @@ class MotionMaster
         void MoveIdle();
         // starts point movement (with pathfinding to avoid obstacles)
         void MovePoint(float x, float y);
+        // start waypoint movement
+        void MoveWaypointPath(uint32_t pathId);
 
     protected:
         // internal template class for creating and initializing a new instance of motion generator

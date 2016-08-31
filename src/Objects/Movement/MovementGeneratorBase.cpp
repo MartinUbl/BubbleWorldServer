@@ -22,12 +22,13 @@
 #include "MovementGeneratorBase.h"
 #include "Unit.h"
 
-MovementGeneratorBase::MovementGeneratorBase(Unit* owner, MotionType type) : m_owner(owner), m_type(type)
+MovementGeneratorBase::MovementGeneratorBase(Unit* owner, MotionType type) : m_owner(owner), m_type(type), m_isCompositeChild(false), m_parent(nullptr)
 {
     m_movementPointId = 0;
     m_lastPointTime = 0;
     m_nextPointDiffTime = 0;
     m_pathfinderFlags = 0;
+    m_stopped = true;
 }
 
 MovementGeneratorBase::~MovementGeneratorBase()
@@ -38,6 +39,17 @@ MovementGeneratorBase::~MovementGeneratorBase()
 MotionType MovementGeneratorBase::GetType()
 {
     return m_type;
+}
+
+void MovementGeneratorBase::SetCompositeChildFlag(bool flag, MovementGeneratorBase* parent)
+{
+    m_isCompositeChild = flag;
+    m_parent = parent;
+}
+
+bool MovementGeneratorBase::IsCompositeChild()
+{
+    return m_isCompositeChild;
 }
 
 void MovementGeneratorBase::Initialize()
@@ -53,6 +65,8 @@ void MovementGeneratorBase::Update()
         // and if we should be at the destination point yet
         if (getMSTimeDiff(m_lastPointTime, getMSTime()) >= m_nextPointDiffTime)
         {
+            m_nextPointDiffTime = 0;
+
             PointReached(m_movementPointId);
 
             // the PointReached method MUST maintain movement timers reset or unset (usually through SetNextMovement or StopMovement methods)
@@ -72,6 +86,22 @@ void MovementGeneratorBase::PointReached(uint32_t id)
     StopMovement();
 }
 
+void MovementGeneratorBase::TerminateMovement()
+{
+    // we fall back only when we are not child of other movement generator
+    if (!IsCompositeChild())
+    {
+        // TODO: determine actual movement generator, that's default for NPC (may be random, may be waypoint, may be idle)
+
+        m_owner->GetMotionMaster().MoveIdle();
+    }
+}
+
+void MovementGeneratorBase::ReceiveChildSignal(uint32_t signalId, uint32_t param)
+{
+    // no implicit behaviour
+}
+
 void MovementGeneratorBase::SetNextMovement(uint32_t id, float sourceX, float sourceY, float destX, float destY, uint8_t moveMask)
 {
     // calculate distance and speed
@@ -83,6 +113,7 @@ void MovementGeneratorBase::SetNextMovement(uint32_t id, float sourceX, float so
 
     m_lastPointTime = getMSTime();
     m_nextPointDiffTime = msDelay;
+    m_stopped = false;
 
     // set movement elements, so the client will see proper motion
     for (uint8_t i = 0; i < 4; i++)
@@ -100,6 +131,7 @@ void MovementGeneratorBase::StopMovement()
 {
     m_lastPointTime = 0;
     m_nextPointDiffTime = 0;
+    m_stopped = true;
 
     // stop all movement elements
     for (uint8_t i = 0; i < 4; i++)

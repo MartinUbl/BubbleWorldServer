@@ -28,11 +28,27 @@ PointMovementGenerator::PointMovementGenerator(Unit* owner) : MovementGeneratorB
 {
     m_originalTarget.x = 0.0f;
     m_originalTarget.y = 0.0f;
+    m_pointId = 0;
 }
 
 PointMovementGenerator::~PointMovementGenerator()
 {
     //
+}
+
+void PointMovementGenerator::Finalize()
+{
+    StopMovement();
+}
+
+void PointMovementGenerator::SetPointId(uint32_t id)
+{
+    m_pointId = id;
+}
+
+uint32_t PointMovementGenerator::GetPointId()
+{
+    return m_pointId;
 }
 
 void PointMovementGenerator::SetTarget(float x, float y)
@@ -53,8 +69,10 @@ void PointMovementGenerator::SetTarget(float x, float y)
         SetNextMovement(0, m_owner->GetPositionX(), m_owner->GetPositionY(), m_fullPath[0].position.x, m_fullPath[0].position.y, m_fullPath[0].moveMask);
     else
     {
-        m_owner->GetMotionMaster().MoveIdle();
         StopMovement();
+        TerminateMovement();
+        if (IsCompositeChild() && m_parent)
+            m_parent->ReceiveChildSignal(MOVEMENT_SIGNAL_CANNOT_REACH_POINT, m_pointId);
     }
 }
 
@@ -70,12 +88,19 @@ void PointMovementGenerator::PointReached(uint32_t id)
             SetTarget(m_originalTarget.x, m_originalTarget.y);
         else
         {
-            m_owner->GetMotionMaster().MoveIdle();
             StopMovement();
+            TerminateMovement();
         }
 
         return;
     }
+
+    // signal the parent motion generator about reaching point
+    if (IsCompositeChild() && m_parent)
+        m_parent->ReceiveChildSignal(MOVEMENT_SIGNAL_POINT_REACHED, m_pointId);
+
+    // signal the owner about point reaching
+    m_owner->MovementGeneratorPointReached(m_pointId);
 
     // move to next point
     SetNextMovement(nextId, m_owner->GetPositionX(), m_owner->GetPositionY(), m_fullPath[nextId].position.x, m_fullPath[nextId].position.y, m_fullPath[nextId].moveMask);

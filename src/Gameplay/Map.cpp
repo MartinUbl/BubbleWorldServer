@@ -80,6 +80,7 @@ void Map::InitContents()
         cr = new Creature();
         cr->Create(rec.guid, rec.id);
         cr->SetInitialPositionAfterLoad(rec.positionMap, rec.positionX, rec.positionY);
+        cr->SetSpawnPosition(rec.positionX, rec.positionY);
         AddToMap(cr);
     }
 

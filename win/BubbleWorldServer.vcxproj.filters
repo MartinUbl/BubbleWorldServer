@@ -151,6 +151,9 @@
     <ClCompile Include="..\src\Objects\Movement\PointMovementGenerator.cpp">
       <Filter>src\Objects\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Storage\WaypointStorage.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\General\Application.h">
@@ -281,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Objects\Movement\PointMovementGenerator.h">
       <Filter>src\Objects\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\WaypointStorage.h">
+      <Filter>src\Storage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

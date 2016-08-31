@@ -83,6 +83,9 @@ class Unit : public WorldObject
         virtual void Update();
         virtual void BuildCreatePacketBlock(SmartPacket &pkt);
 
+        // signal the motion ended in some point
+        virtual void MovementGeneratorPointReached(uint32_t pointId);
+
         // retrieves unit level
         uint16_t GetLevel();
         // sets unit level

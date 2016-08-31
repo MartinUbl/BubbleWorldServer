@@ -101,6 +101,11 @@ void Unit::CreateUpdateFields()
     WorldObject::CreateUpdateFields();
 }
 
+void Unit::MovementGeneratorPointReached(uint32_t pointId)
+{
+    // no implicit behaviour
+}
+
 uint16_t Unit::GetLevel()
 {
     return GetUInt32Value(UNIT_FIELD_LEVEL);

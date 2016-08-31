@@ -41,6 +41,8 @@ class CreatureScript
         virtual void OnInteract(Player* /*source*/) {};
         // called when player made dialogue decision
         virtual void OnDialogueDecision(Player* /*source*/, uint32_t /*decision*/) {};
+        // called when motion generator reaches target point
+        virtual void OnMovementPointReached(uint32_t /*id*/) {};
 
         // performs talk event with all needed conversions, etc.
         void ScriptSay(const wchar_t* msg, Player* target = nullptr);

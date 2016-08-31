@@ -183,6 +183,7 @@
     <ClCompile Include="..\src\Storage\GameobjectStorage.cpp" />
     <ClCompile Include="..\src\Storage\MapStorage.cpp" />
     <ClCompile Include="..\src\Storage\ResourceStorage.cpp" />
+    <ClCompile Include="..\src\Storage\WaypointStorage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Gameplay\Map.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="..\src\Storage\GameobjectStorage.h" />
     <ClInclude Include="..\src\Storage\MapStorage.h" />
     <ClInclude Include="..\src\Storage\ResourceStorage.h" />
+    <ClInclude Include="..\src\Storage\WaypointStorage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
