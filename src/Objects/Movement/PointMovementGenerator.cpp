@@ -88,19 +88,22 @@ void PointMovementGenerator::PointReached(uint32_t id)
             SetTarget(m_originalTarget.x, m_originalTarget.y);
         else
         {
+            // force position change to desired coordinates (will eliminate the inaccuracy caused by floating point multiplication arithmetic error)
+            m_owner->SetPosition(m_originalTarget.x, m_originalTarget.y);
+
             StopMovement();
             TerminateMovement();
         }
 
+        // signal the parent motion generator about reaching point
+        if (IsCompositeChild() && m_parent)
+            m_parent->ReceiveChildSignal(MOVEMENT_SIGNAL_POINT_REACHED, m_pointId);
+
+        // signal the owner about point reaching
+        m_owner->MovementGeneratorPointReached(m_pointId);
+
         return;
     }
-
-    // signal the parent motion generator about reaching point
-    if (IsCompositeChild() && m_parent)
-        m_parent->ReceiveChildSignal(MOVEMENT_SIGNAL_POINT_REACHED, m_pointId);
-
-    // signal the owner about point reaching
-    m_owner->MovementGeneratorPointReached(m_pointId);
 
     // move to next point
     SetNextMovement(nextId, m_owner->GetPositionX(), m_owner->GetPositionY(), m_fullPath[nextId].position.x, m_fullPath[nextId].position.y, m_fullPath[nextId].moveMask);

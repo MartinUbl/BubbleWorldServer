@@ -61,7 +61,8 @@ float Pathfinder::CalculateHeuristic(uint32_t srcX, uint32_t srcY, uint32_t dstX
     return (float)(num_min(dX, dY)*sqrt(2) + fabs((float)(dX - dY)));
 }
 
-uint32_t Pathfinder::GetDestMoveMask(uint32_t srcX, uint32_t srcY, uint32_t dstX, uint32_t dstY)
+template<typename T>
+uint32_t Pathfinder::GetDestMoveMask(T srcX, T srcY, T dstX, T dstY)
 {
     uint32_t moveMask = 0;
 
@@ -79,6 +80,9 @@ uint32_t Pathfinder::GetDestMoveMask(uint32_t srcX, uint32_t srcY, uint32_t dstX
 
     return moveMask;
 }
+
+template uint32_t Pathfinder::GetDestMoveMask<float>(float, float, float, float);
+template uint32_t Pathfinder::GetDestMoveMask<uint32_t>(uint32_t, uint32_t, uint32_t, uint32_t);
 
 // we use this instead of std::pair stuff; this should be a bit faster
 #define MP32(a,b) ((((uint64_t)a) << 32L) | ((uint64_t)b))
@@ -280,11 +284,107 @@ bool Pathfinder::FindPath(MotionPointVector& dstVector, uint32_t* outFlags)
     // inverse the reconstructed path (so it goes from start to destination, not backwards)
     std::reverse(pfrecs.begin(), pfrecs.end());
 
+    uint8_t moveMask;
+
+    float baseX = floorf(m_sourcePos.x + 0.001f) + 0.5f;
+    float baseY = floorf(m_sourcePos.y + 0.001f) + 0.5f;
+
+    // we are not near center of source 
+    if (fabs(m_sourcePos.x - baseX) > 0.0001f || fabs(m_sourcePos.y - baseY) > 0.0001f)
+    {
+        float xa, ya;
+
+        xa = m_sourcePos.x - baseX;
+        ya = m_sourcePos.y - baseY;
+
+        Vector2 mv1, mv2;
+
+        // find the movement vectors heading towards centre of the cell
+        // there are always 2 of them - one diagonal and one in specific (left,down,right,up) direction
+        if (fabs(xa) > fabs(ya))
+        {
+            mv1.x = -sgnMod(fabs(ya), xa);
+            mv1.y = -ya;
+            mv2.x = -sgnMod(fabs(xa - ya), xa);
+            mv2.y = 0;
+        }
+        else
+        {
+            mv1.x = -xa;
+            mv1.y = -sgnMod(fabs(xa), ya);
+            mv2.x = 0;
+            mv2.y = -sgnMod(fabs(xa - ya), ya);
+        }
+
+        Position pos1(m_sourcePos.x + mv1.x, m_sourcePos.y + mv1.y);
+
+        // move diagonally
+        if (fabs(mv1.x) > 0.0001f || fabs(mv1.y) > 0.0001f)
+        {
+            moveMask = GetDestMoveMask<float>(m_sourcePos.x, m_sourcePos.y, pos1.x, pos1.y);
+            dstVector.push_back(MotionPoint(pos1.x, pos1.y, moveMask));
+        }
+
+        // move by axis
+        if (fabs(mv2.x) > 0.0001f || fabs(mv2.y) > 0.0001f)
+        {
+            moveMask = GetDestMoveMask<float>(pos1.x, pos1.y, baseX, baseY);
+            dstVector.push_back(MotionPoint(baseX, baseY, moveMask));
+        }
+    }
+
     // and build motion point path from reconstructed path
     for (uint32_t i = 1; i < pfrecs.size(); i++)
     {
-        uint8_t moveMask = GetDestMoveMask(pfrecs[i - 1]->x, pfrecs[i - 1]->y, pfrecs[i]->x, pfrecs[i]->y);
+        moveMask = GetDestMoveMask<uint32_t>(pfrecs[i - 1]->x, pfrecs[i - 1]->y, pfrecs[i]->x, pfrecs[i]->y);
         dstVector.push_back(MotionPoint((float)pfrecs[i]->x + 0.5f, (float)pfrecs[i]->y + 0.5f, moveMask));
+    }
+
+    baseX = floorf(m_destPos.x + 0.001f) + 0.5f;
+    baseY = floorf(m_destPos.y + 0.001f) + 0.5f;
+
+    // if we found complete path, try to find path to the real dest point from the center
+    if (!(*outFlags & PATH_INCOMPLETE))
+    {
+        // we are not near center of source 
+        if (fabs(m_destPos.x - baseX) > 0.0001f || fabs(m_destPos.y - baseY) > 0.0001f)
+        {
+            float xa, ya;
+
+            xa = m_destPos.x - baseX;
+            ya = m_destPos.y - baseY;
+
+            Vector2 mv1, mv2;
+
+            if (fabs(xa) > fabs(ya))
+            {
+                mv1.x = sgnMod(fabs(ya), xa);
+                mv1.y = ya;
+                mv2.x = sgnMod(fabs(xa - ya), xa);
+                mv2.y = 0;
+            }
+            else
+            {
+                mv1.x = xa;
+                mv1.y = sgnMod(fabs(xa), ya);
+                mv2.x = 0;
+                mv2.y = sgnMod(fabs(xa - ya), ya);
+            }
+
+            Position pos1(baseX + mv1.x, baseY + mv1.y);
+
+            if (fabs(mv1.x) > 0.0001f || fabs(mv1.y) > 0.0001f)
+            {
+                moveMask = GetDestMoveMask<float>(baseX, baseY, pos1.x, pos1.y);
+                dstVector.push_back(MotionPoint(pos1.x, pos1.y, moveMask));
+            }
+
+            if (fabs(mv2.x) > 0.0001f || fabs(mv2.y) > 0.0001f)
+            {
+                moveMask = GetDestMoveMask<float>(pos1.x, pos1.y, m_destPos.x, m_destPos.y);
+                dstVector.push_back(MotionPoint(m_destPos.x, m_destPos.y, moveMask));
+            }
+        }
     }
 
     ClearPathfindStructures();

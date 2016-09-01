@@ -85,7 +85,8 @@ class Pathfinder
         // calculates heuristic between two fields (using octile distance)
         float CalculateHeuristic(uint32_t srcX, uint32_t srcY, uint32_t dstX, uint32_t dstY);
         // retrieves movement direction mask for traversing between two fields
-        uint32_t GetDestMoveMask(uint32_t srcX, uint32_t srcY, uint32_t dstX, uint32_t dstY);
+        template<typename T>
+        uint32_t GetDestMoveMask(T srcX, T srcY, T dstX, T dstY);
 
         // pushes pathfinding record to priority queue
         void PushPathfindRecord(PathfindFieldRecord* pfrecord);

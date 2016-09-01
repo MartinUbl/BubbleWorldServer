@@ -86,4 +86,9 @@ inline std::string WStringToUTF8(const std::wstring& str)
     }
 }
 
+inline float sgnMod(float value, float mod)
+{
+    return mod > 0 ? value : -value;
+}
+
 #endif
