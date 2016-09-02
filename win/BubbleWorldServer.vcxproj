@@ -160,6 +160,7 @@
     <ClCompile Include="..\src\Network\SmartPacket.cpp" />
     <ClCompile Include="..\src\Objects\Creature.cpp" />
     <ClCompile Include="..\src\Objects\Gameobject.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\FollowMovementGenerator.cpp" />
     <ClCompile Include="..\src\Objects\Movement\IdleMovementGenerator.cpp" />
     <ClCompile Include="..\src\Objects\Movement\MotionMaster.cpp" />
     <ClCompile Include="..\src\Objects\Movement\MovementGeneratorBase.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="..\src\Objects\AnimEnums.h" />
     <ClInclude Include="..\src\Objects\Creature.h" />
     <ClInclude Include="..\src\Objects\Gameobject.h" />
+    <ClInclude Include="..\src\Objects\Movement\FollowMovementGenerator.h" />
     <ClInclude Include="..\src\Objects\Movement\IdleMovementGenerator.h" />
     <ClInclude Include="..\src\Objects\Movement\MotionMaster.h" />
     <ClInclude Include="..\src\Objects\Movement\MovementGeneratorBase.h" />

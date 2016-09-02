@@ -160,6 +160,9 @@
     <ClCompile Include="..\src\General\Random.cpp">
       <Filter>src\General</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Objects\Movement\FollowMovementGenerator.cpp">
+      <Filter>src\Objects\Movement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\General\Application.h">
@@ -299,6 +302,9 @@
     </ClInclude>
     <ClInclude Include="..\src\General\Random.h">
       <Filter>src\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\Movement\FollowMovementGenerator.h">
+      <Filter>src\Objects\Movement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

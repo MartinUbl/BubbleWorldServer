@@ -25,6 +25,7 @@
 #include "PointMovementGenerator.h"
 #include "WaypointMovementGenerator.h"
 #include "RandomMovementGenerator.h"
+#include "FollowMovementGenerator.h"
 #include "Log.h"
 
 MotionMaster::MotionMaster(Unit* owner) : m_owner(owner)
@@ -89,6 +90,15 @@ void MotionMaster::MoveRandom(float distance, uint32_t minDelay, uint32_t maxDel
         RandomMovementGenerator* gen = ChangeTo<RandomMovementGenerator>();
 
         gen->StartRandomMovement(distance, minDelay, maxDelay);
+    };
+}
+
+void MotionMaster::MoveFollow(Unit* target, float followDistance, float maxDistance)
+{
+    m_movementGeneratorChangeLambda = [this, target, followDistance, maxDistance]() {
+        FollowMovementGenerator* gen = ChangeTo<FollowMovementGenerator>();
+
+        gen->StartFollowing(target, followDistance, maxDistance);
     };
 }
 

@@ -52,6 +52,11 @@ bool MovementGeneratorBase::IsCompositeChild()
     return m_isCompositeChild;
 }
 
+bool MovementGeneratorBase::IsStopped()
+{
+    return m_stopped;
+}
+
 void MovementGeneratorBase::Initialize()
 {
     //
