@@ -112,7 +112,7 @@ void MovementGeneratorBase::SetNextMovement(uint32_t id, float sourceX, float so
     uint32_t msDelay = (uint32_t)(distance / perMillisecond);
 
     m_lastPointTime = getMSTime();
-    m_nextPointDiffTime = msDelay;
+    m_nextPointDiffTime = msDelay ? msDelay : 1;
     m_stopped = false;
 
     // set movement elements, so the client will see proper motion

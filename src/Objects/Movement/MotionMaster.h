@@ -28,6 +28,7 @@ enum MotionType
     MOVEMENT_IDLE = 0,
     MOVEMENT_WAYPOINT = 1,
     MOVEMENT_POINT = 2,
+    MOVEMENT_RANDOM = 3,
     MAX_MOTION_TYPE
 };
 
@@ -55,6 +56,8 @@ class MotionMaster
         void MovePoint(float x, float y);
         // start waypoint movement
         void MoveWaypointPath(uint32_t pathId);
+        // start random movement
+        void MoveRandom(float distance, uint32_t minDelay, uint32_t maxDelay);
 
     protected:
         // internal template class for creating and initializing a new instance of motion generator

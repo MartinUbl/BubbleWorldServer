@@ -24,6 +24,7 @@
 #include "IdleMovementGenerator.h"
 #include "PointMovementGenerator.h"
 #include "WaypointMovementGenerator.h"
+#include "RandomMovementGenerator.h"
 #include "Log.h"
 
 MotionMaster::MotionMaster(Unit* owner) : m_owner(owner)
@@ -79,6 +80,15 @@ void MotionMaster::MoveWaypointPath(uint32_t pathId)
         WaypointMovementGenerator* gen = ChangeTo<WaypointMovementGenerator>();
 
         gen->StartWaypointPathId(pathId);
+    };
+}
+
+void MotionMaster::MoveRandom(float distance, uint32_t minDelay, uint32_t maxDelay)
+{
+    m_movementGeneratorChangeLambda = [this, distance, minDelay, maxDelay]() {
+        RandomMovementGenerator* gen = ChangeTo<RandomMovementGenerator>();
+
+        gen->StartRandomMovement(distance, minDelay, maxDelay);
     };
 }
 

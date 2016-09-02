@@ -151,6 +151,7 @@
     <ClCompile Include="..\src\General\CRC32.cpp" />
     <ClCompile Include="..\src\General\Log.cpp" />
     <ClCompile Include="..\src\General\Main.cpp" />
+    <ClCompile Include="..\src\General\Random.cpp" />
     <ClCompile Include="..\src\General\SHA1.cpp" />
     <ClCompile Include="..\src\General\Vector2.cpp" />
     <ClCompile Include="..\src\Network\NetworkManager.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="..\src\Objects\Movement\MovementGeneratorBase.cpp" />
     <ClCompile Include="..\src\Objects\Movement\Pathfinding.cpp" />
     <ClCompile Include="..\src\Objects\Movement\PointMovementGenerator.cpp" />
+    <ClCompile Include="..\src\Objects\Movement\RandomMovementGenerator.cpp" />
     <ClCompile Include="..\src\Objects\Movement\WaypointMovementGenerator.cpp" />
     <ClCompile Include="..\src\Objects\Player.cpp" />
     <ClCompile Include="..\src\Objects\Unit.cpp" />
@@ -195,6 +197,7 @@
     <ClInclude Include="..\src\General\CRC32.h" />
     <ClInclude Include="..\src\General\General.h" />
     <ClInclude Include="..\src\General\Log.h" />
+    <ClInclude Include="..\src\General\Random.h" />
     <ClInclude Include="..\src\General\SHA1.h" />
     <ClInclude Include="..\src\General\SharedEnums.h" />
     <ClInclude Include="..\src\General\Singleton.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="..\src\Objects\Movement\MovementGeneratorBase.h" />
     <ClInclude Include="..\src\Objects\Movement\Pathfinding.h" />
     <ClInclude Include="..\src\Objects\Movement\PointMovementGenerator.h" />
+    <ClInclude Include="..\src\Objects\Movement\RandomMovementGenerator.h" />
     <ClInclude Include="..\src\Objects\Movement\WaypointMovementGenerator.h" />
     <ClInclude Include="..\src\Objects\ObjectEnums.h" />
     <ClInclude Include="..\src\Objects\Player.h" />

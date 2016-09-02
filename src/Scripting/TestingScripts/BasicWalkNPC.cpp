@@ -34,7 +34,7 @@ class BasicWalkNPC : public CreatureScript
 
         void OnCreate() override
         {
-            dialogue.AddDialogueAction_Decision(1, 0, L"Co má udìlat?", 1, L"Jen tak si chodit", 2, L"Zkus jít po cestì", 3, L"Zastavit!");
+            dialogue.AddDialogueAction_Decision(1, 0, L"Co má udìlat?", 1, L"Jen tak si chodit", 2, L"Zkus jít po cestì", 3, L"Náhoda", 4, L"Zastavit!");
             dialogue.AddDialogueAction_EndDialogue(2);
         }
 
@@ -63,6 +63,11 @@ class BasicWalkNPC : public CreatureScript
                 self->GetMotionMaster().MoveWaypointPath(1);
             }
             else if (decision == 3)
+            {
+                ScriptSay(L"Jen tak se tu náhodnì budu flákat");
+                self->GetMotionMaster().MoveRandom(3.0f, 500, 1500);
+            }
+            else if (decision == 4)
             {
                 ScriptSay(L"STOP! Hammer time!");
                 self->GetMotionMaster().MoveIdle();
