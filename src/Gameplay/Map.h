@@ -47,6 +47,21 @@ typedef std::vector<WorldObjectList> WorldObjectMapRow;
 typedef std::vector<WorldObjectMapRow> WorldObjectMap;
 
 /*
+ * Structure containing pending removal from cell map
+ */
+struct PendingCellRemoval
+{
+    PendingCellRemoval(uint32_t _cellX, uint32_t _cellY, WorldObject* _object) : cellX(_cellX), cellY(_cellY), object(_object) {};
+
+    // cell X coordinate
+    uint32_t cellX;
+    // cell Y coordinate
+    uint32_t cellY;
+    // object to be deleted
+    WorldObject* object;
+};
+
+/*
  * Class maintaining objects on one map
  */
 class Map
@@ -127,6 +142,11 @@ class Map
         WorldObjectMap m_objects;
         // pathfinding layer
         PathfindMap m_pathfindLayer;
+        // pending cell removal records
+        std::list<PendingCellRemoval> m_pendingCellRemovals;
+
+        // map update mutex
+        std::recursive_mutex m_mapUpdateMutex;
 };
 
 #endif

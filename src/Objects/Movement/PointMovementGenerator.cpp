@@ -89,7 +89,7 @@ void PointMovementGenerator::PointReached(uint32_t id)
         else
         {
             // force position change to desired coordinates (will eliminate the inaccuracy caused by floating point multiplication arithmetic error)
-            m_owner->SetPosition(m_originalTarget.x, m_originalTarget.y);
+            m_owner->RelocateWithinMap(m_originalTarget.x, m_originalTarget.y);
 
             StopMovement();
             TerminateMovement();

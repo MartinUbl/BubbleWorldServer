@@ -137,13 +137,18 @@ void Map::RemoveFromMap(WorldObject* obj)
     if (obj->GetType() == OTYPE_GAMEOBJECT)
         DisablePathfindCollision(obj);
 
-    // find him in cell and erase him
-    for (WorldObjectList::iterator itr = m_objects[cx][cy].begin(); itr != m_objects[cx][cy].end(); ++itr)
+    // lock scope
     {
-        if (*itr == obj)
+        std::unique_lock<std::recursive_mutex> lck(m_mapUpdateMutex);
+
+        // find him in cell and erase him
+        for (WorldObjectList::iterator itr = m_objects[cx][cy].begin(); itr != m_objects[cx][cy].end(); ++itr)
         {
-            m_objects[cx][cy].erase(itr);
-            break;
+            if ((*itr)->GetGUID() == obj->GetGUID())
+            {
+                m_objects[cx][cy].erase(itr);
+                break;
+            }
         }
     }
 
@@ -188,6 +193,15 @@ void Map::Relocate(WorldObject* obj, float oldX, float oldY, float newX, float n
             // leaving sorrounding, destroy player in that cell and destroy objects for them
             SendCellDeletePacketsFor(itX, itY, obj);
         }
+    }
+
+    // lock scope
+    {
+        std::unique_lock<std::recursive_mutex> lck(m_mapUpdateMutex);
+
+        m_pendingCellRemovals.push_back(PendingCellRemoval(cellX_old, cellY_old, obj));
+
+        m_objects[cellX_new][cellY_new].push_back(obj);
     }
 
     for (itX = beginX_n; itX <= endX_n; itX++)
@@ -543,8 +557,26 @@ void Map::SendCreateSorroundings(Player* plr)
 
 void Map::Update()
 {
+    std::unique_lock<std::recursive_mutex> lck(m_mapUpdateMutex);
+
     uint32_t cx, cy;
     // TODO: manage and update only active cells
+
+    if (!m_pendingCellRemovals.empty())
+    {
+        for (PendingCellRemoval& rem : m_pendingCellRemovals)
+        {
+            for (WorldObjectList::iterator itr = m_objects[rem.cellX][rem.cellY].begin(); itr != m_objects[rem.cellX][rem.cellY].end(); ++itr)
+            {
+                if (*itr == rem.object)
+                {
+                    m_objects[rem.cellX][rem.cellY].erase(itr);
+                    break;
+                }
+            }
+        }
+        m_pendingCellRemovals.clear();
+    }
 
     for (cx = 0; cx < m_objects.size(); cx++)
     {
@@ -552,6 +584,23 @@ void Map::Update()
         {
             for (WorldObject* obj : m_objects[cx][cy])
                 obj->Update();
+
+            // remove pending objects (if any)
+            if (!m_pendingCellRemovals.empty())
+            {
+                for (PendingCellRemoval& rem : m_pendingCellRemovals)
+                {
+                    for (WorldObjectList::iterator itr = m_objects[rem.cellX][rem.cellY].begin(); itr != m_objects[rem.cellX][rem.cellY].end(); ++itr)
+                    {
+                        if (*itr == rem.object)
+                        {
+                            m_objects[rem.cellX][rem.cellY].erase(itr);
+                            break;
+                        }
+                    }
+                }
+                m_pendingCellRemovals.clear();
+            }
         }
     }
 }

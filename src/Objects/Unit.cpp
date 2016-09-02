@@ -59,24 +59,27 @@ void Unit::Update()
         if (msDiff >= 1)
         {
             float coef = (float)msDiff;
-            float oldX = m_position.x;
-            float oldY = m_position.y;
+            float newX;
+            float newY;
 
-            m_position.x += coef * m_moveVector.x;
-            if (m_position.x < 0.0f)
-                m_position.x = 0.0f;
+            //m_position.x += coef * m_moveVector.x;
+            newX = m_position.x + coef * m_moveVector.x;
+            if (newX < 0.0f)
+                newX = 0.0f;
 
-            MapField* mf = GetMap()->GetField(m_position.x, m_position.y);
+            MapField* mf = GetMap()->GetField(newX, m_position.y);
             if (!mf || !CanMoveOn((MapFieldType)mf->type, mf->flags))
-                m_position.x = oldX;
+                newX = m_position.x;
 
-            m_position.y += coef * m_moveVector.y;
-            if (m_position.y < 0.0f)
-                m_position.y = 0.0f;
+            newY = m_position.y + coef * m_moveVector.y;
+            if (newY < 0.0f)
+                newY = 0.0f;
 
-            mf = GetMap()->GetField(m_position.x, m_position.y);
+            mf = GetMap()->GetField(newX, newY);
             if (!mf || !CanMoveOn((MapFieldType)mf->type, mf->flags))
-                m_position.y = oldY;
+                newY = m_position.y;
+
+            RelocateWithinMap(newX, newY);
 
             m_lastMovementUpdate = msNow;
         }

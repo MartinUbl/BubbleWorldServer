@@ -422,7 +422,7 @@ void PacketHandlers::HandleMoveStopDir(Session* sess, SmartPacket& packet)
 
     // TODO: verify if this is possible, anticheat, etc.
 
-    sess->GetPlayer()->SetPosition(x, y);
+    sess->GetPlayer()->RelocateWithinMap(x, y);
 
     sess->GetPlayer()->StopMoving((MoveDirectionElement)direction);
 }
@@ -436,7 +436,7 @@ void PacketHandlers::HandleMoveHeartbeat(Session* sess, SmartPacket& packet)
 
     Player* plr = sess->GetPlayer();
 
-    plr->SetPosition(x, y);
+    plr->RelocateWithinMap(x, y);
 
     // TODO: timer, limit maximum count of heartbeats per second
 
