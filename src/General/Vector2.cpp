@@ -40,8 +40,68 @@ Vector2::Vector2(const Vector2 &vec)
     y = vec.y;
 }
 
+Vector2 Vector2::operator*(float m)
+{
+    return Vector2(x*m, y*m);
+}
+
+Vector2 Vector2::operator/(float m)
+{
+    return Vector2(x/m, y/m);
+}
+
+Vector2 Vector2::operator+(Vector2 const& sec)
+{
+    return Vector2(x + sec.x, y + sec.y);
+}
+
+Vector2 Vector2::operator-(Vector2 const& sec)
+{
+    return Vector2(x - sec.x, y - sec.y);
+}
+
+float Vector2::operator*(Vector2 const& sec)
+{
+    return x*sec.x + y*sec.y;
+}
+
+Vector2& Vector2::operator*=(float m)
+{
+    x *= m;
+    y *= m;
+    return *this;
+}
+
+Vector2& Vector2::operator/=(float m)
+{
+    x /= m;
+    y /= m;
+    return *this;
+}
+
+Vector2& Vector2::operator+=(Vector2 const& sec)
+{
+    x += sec.x;
+    y += sec.y;
+    return *this;
+}
+
+Vector2& Vector2::operator-=(Vector2 const& sec)
+{
+    x -= sec.x;
+    y -= sec.y;
+    return *this;
+}
+
 void Vector2::SetFromPolar(float angleRad, float distance)
 {
     x = cos(angleRad) * distance;
     y = sin(angleRad) * distance;
+}
+
+void Vector2::MakeUnit()
+{
+    float size = sqrt(x*x + y*y);
+    x /= size;
+    y /= size;
 }

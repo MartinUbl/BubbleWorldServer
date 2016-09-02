@@ -32,8 +32,20 @@ struct Vector2
     // copy constructor
     Vector2(const Vector2 &vec);
 
+    Vector2 operator*(float m);
+    Vector2 operator/(float m);
+    Vector2 operator+(Vector2 const& sec);
+    Vector2 operator-(Vector2 const& sec);
+    float operator*(Vector2 const& sec);
+    Vector2& operator*=(float m);
+    Vector2& operator/=(float m);
+    Vector2& operator+=(Vector2 const& sec);
+    Vector2& operator-=(Vector2 const& sec);
+
     // TODO: more vector operations
 
+    // reduces the vector to unit size (preserving ratios)
+    void MakeUnit();
     // transforms polar coordinates (angle and distance) to relative coordinates
     void SetFromPolar(float angleRad, float distance);
 
