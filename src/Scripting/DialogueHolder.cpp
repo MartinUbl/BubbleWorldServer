@@ -300,8 +300,8 @@ void DialogueHolder::AddDialogueAction_Decision(uint32_t id, uint32_t howLong, c
     }
     if (id5 != 0 && text5 != nullptr)
     {
-        rec->IDs[6] = id5;
-        rec->texts[6] = text5;
+        rec->IDs[4] = id5;
+        rec->texts[4] = text5;
     }
 
     AddDialogueAction(id, rec);
