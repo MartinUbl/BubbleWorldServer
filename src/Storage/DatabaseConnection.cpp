@@ -194,6 +194,9 @@ bool DatabaseConnection::Connect(const char* host, uint16_t port, const char* us
         return false;
     }
 
+    // we use UTF-8 everywhere
+    Execute("SET NAMES utf8;");
+
     return true;
 }
 
