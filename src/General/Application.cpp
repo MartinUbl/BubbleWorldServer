@@ -31,6 +31,8 @@
 #include "GameobjectStorage.h"
 #include "ScriptManager.h"
 #include "WaypointStorage.h"
+#include "ItemStorage.h"
+#include "ObjectAccessor.h"
 
 #include <thread>
 
@@ -74,10 +76,16 @@ bool Application::Init(int argc, char** argv)
     sLog->Info("Finished checksum verification");
     sLog->Info("");
 
+    sObjectAccessor->InitGUIDMaps();
+    sLog->Info("");
+
     sCreatureStorage->LoadFromDB();
     sLog->Info("");
 
     sGameobjectStorage->LoadFromDB();
+    sLog->Info("");
+
+    sItemStorage->LoadFromDB();
     sLog->Info("");
 
     sWaypointStorage->LoadFromDB();

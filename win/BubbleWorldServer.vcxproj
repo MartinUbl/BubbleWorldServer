@@ -40,14 +40,14 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -160,6 +160,7 @@
     <ClCompile Include="..\src\Network\SmartPacket.cpp" />
     <ClCompile Include="..\src\Objects\Creature.cpp" />
     <ClCompile Include="..\src\Objects\Gameobject.cpp" />
+    <ClCompile Include="..\src\Objects\GuidMap.cpp" />
     <ClCompile Include="..\src\Objects\Movement\FollowMovementGenerator.cpp" />
     <ClCompile Include="..\src\Objects\Movement\IdleMovementGenerator.cpp" />
     <ClCompile Include="..\src\Objects\Movement\MotionMaster.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="..\src\Scripting\ScriptLoader.cpp" />
     <ClCompile Include="..\src\Scripting\ScriptManager.cpp" />
     <ClCompile Include="..\src\Scripting\TestingScripts\BasicDialogueNPC.cpp" />
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicItemNPC.cpp" />
     <ClCompile Include="..\src\Scripting\TestingScripts\BasicTalkNPC.cpp" />
     <ClCompile Include="..\src\Scripting\TestingScripts\BasicWalkNPC.cpp" />
     <ClCompile Include="..\src\Services\AuthenticationService.cpp" />
@@ -184,6 +186,7 @@
     <ClCompile Include="..\src\Storage\CreatureStorage.cpp" />
     <ClCompile Include="..\src\Storage\DatabaseConnection.cpp" />
     <ClCompile Include="..\src\Storage\GameobjectStorage.cpp" />
+    <ClCompile Include="..\src\Storage\ItemStorage.cpp" />
     <ClCompile Include="..\src\Storage\MapStorage.cpp" />
     <ClCompile Include="..\src\Storage\ResourceStorage.cpp" />
     <ClCompile Include="..\src\Storage\WaypointStorage.cpp" />
@@ -211,6 +214,7 @@
     <ClInclude Include="..\src\Objects\AnimEnums.h" />
     <ClInclude Include="..\src\Objects\Creature.h" />
     <ClInclude Include="..\src\Objects\Gameobject.h" />
+    <ClInclude Include="..\src\Objects\GuidMap.h" />
     <ClInclude Include="..\src\Objects\Movement\FollowMovementGenerator.h" />
     <ClInclude Include="..\src\Objects\Movement\IdleMovementGenerator.h" />
     <ClInclude Include="..\src\Objects\Movement\MotionMaster.h" />
@@ -233,6 +237,7 @@
     <ClInclude Include="..\src\Storage\CreatureStorage.h" />
     <ClInclude Include="..\src\Storage\DatabaseConnection.h" />
     <ClInclude Include="..\src\Storage\GameobjectStorage.h" />
+    <ClInclude Include="..\src\Storage\ItemStorage.h" />
     <ClInclude Include="..\src\Storage\MapStorage.h" />
     <ClInclude Include="..\src\Storage\ResourceStorage.h" />
     <ClInclude Include="..\src\Storage\WaypointStorage.h" />

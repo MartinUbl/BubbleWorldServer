@@ -21,8 +21,19 @@
 #define BW_OBJECT_ACCESSOR_H
 
 #include "Singleton.h"
+#include "GuidMap.h"
 
 class WorldObject;
+
+// type of guidmap
+enum GUIDMapType
+{
+    GUIDMAP_CREATURE = 0,
+    GUIDMAP_GAMEOBJECT = 1,
+    GUIDMAP_PLAYER = 2,
+    GUIDMAP_ITEM = 3,
+    MAX_GUIDMAP = 4
+};
 
 /*
  * Class used for maintaining all existing objects in world
@@ -33,12 +44,24 @@ class ObjectAccessor
     public:
         ~ObjectAccessor();
 
+        // initializes GUID maps for further use
+        void InitGUIDMaps();
+
         // adds object to evidence
         void AddObject(uint64_t guid, WorldObject* obj);
         // removes object from evidence
         void RemoveObject(uint64_t guid);
         // finds existing object
         WorldObject* FindWorldObject(uint64_t guid);
+
+        // allocates and builds new creature GUID
+        uint64_t AllocateCreatureGUID(uint32_t entry);
+        // allocates and builds new gameobject GUID
+        uint64_t AllocateGameobjectGUID(uint32_t entry);
+        // allocates and builds new player GUID
+        uint64_t AllocatePlayerGUID();
+        // allocates and builds new item GUID
+        uint32_t AllocateItemGUID();
 
     protected:
         // protected singleton constructor
@@ -47,6 +70,8 @@ class ObjectAccessor
     private:
         // map of all objects
         std::unordered_map<uint64_t, WorldObject*> m_objectMap;
+        // guidspace
+        GuidMap m_guidMap[MAX_GUIDMAP];
 };
 
 #define sObjectAccessor Singleton<ObjectAccessor>::getInstance()

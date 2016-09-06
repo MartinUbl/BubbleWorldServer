@@ -163,6 +163,15 @@
     <ClCompile Include="..\src\Objects\Movement\FollowMovementGenerator.cpp">
       <Filter>src\Objects\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Storage\ItemStorage.cpp">
+      <Filter>src\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Objects\GuidMap.cpp">
+      <Filter>src\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scripting\TestingScripts\BasicItemNPC.cpp">
+      <Filter>src\Scripting\TestingScripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\General\Application.h">
@@ -305,6 +314,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Objects\Movement\FollowMovementGenerator.h">
       <Filter>src\Objects\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Storage\ItemStorage.h">
+      <Filter>src\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Objects\GuidMap.h">
+      <Filter>src\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

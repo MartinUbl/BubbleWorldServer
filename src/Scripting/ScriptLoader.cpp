@@ -23,6 +23,7 @@
 extern void ScriptLoader_BasicTalkNPC();
 extern void ScriptLoader_BasicDialogueNPC();
 extern void ScriptLoader_BasicWalkNPC();
+extern void ScriptLoader_BasicItemNPC();
 
 // loads all present scripts
 void LoadScripts()
@@ -30,4 +31,5 @@ void LoadScripts()
     ScriptLoader_BasicTalkNPC();
     ScriptLoader_BasicDialogueNPC();
     ScriptLoader_BasicWalkNPC();
+    ScriptLoader_BasicItemNPC();
 }

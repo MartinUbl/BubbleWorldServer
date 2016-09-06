@@ -66,6 +66,14 @@ enum Opcodes
     SP_DIALOGUE_DATA                            = 40,
     CP_DIALOGUE_DECISION                        = 41,
     SP_DIALOGUE_CLOSE                           = 42,
+    CP_INVENTORY_QUERY                          = 43,
+    SP_INVENTORY                                = 44,
+    CP_ITEM_QUERY                               = 45,
+    SP_ITEM_QUERY_RESPONSE                      = 46,
+    CP_INVENTORY_MOVE_ITEM                      = 47,
+    CP_INVENTORY_REMOVE_ITEM                    = 48,
+    SP_ITEM_OPERATION_INFO                      = 49,
+    SP_UPDATE_INVENTORY_SLOT                    = 50,
     MAX_OPCODES
 };
 

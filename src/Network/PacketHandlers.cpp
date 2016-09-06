@@ -25,6 +25,7 @@
 #include "ResourceStreamService.h"
 #include "ResourceStorage.h"
 #include "CharacterStorage.h"
+#include "ItemStorage.h"
 #include "Player.h"
 #include "Creature.h"
 #include "MapManager.h"
@@ -487,4 +488,54 @@ void PacketHandlers::HandleDialogueDecision(Session* sess, SmartPacket& packet)
     }
 
     obj->ToCreature()->DialogueDecision(sess->GetPlayer(), decision);
+}
+
+void PacketHandlers::HandleInventoryQuery(Session* sess, SmartPacket& packet)
+{
+    SmartPacket pkt(SP_INVENTORY);
+    sess->GetPlayer()->FillInventoryPacket(pkt);
+    sess->SendPacket(pkt);
+}
+
+void PacketHandlers::HandleItemQuery(Session* sess, SmartPacket& packet)
+{
+    uint32_t id = packet.ReadUInt32();
+    if (id == 0)
+    {
+        sLog->Error("Invalid item %u query received", id);
+        return;
+    }
+
+    SmartPacket pkt(SP_ITEM_QUERY_RESPONSE);
+
+    ItemTemplateRecord* irec = sItemStorage->GetItemTemplate(id);
+    if (!irec)
+        pkt.WriteUInt8(GENERIC_STATUS_NOTFOUND);
+    else
+    {
+        pkt.WriteUInt8(GENERIC_STATUS_OK);
+        pkt.WriteUInt32(irec->id);
+        pkt.WriteUInt32(irec->imageId);
+        pkt.WriteString(irec->name.c_str());
+        pkt.WriteString(irec->description.c_str());
+        pkt.WriteUInt32(irec->stackSize);
+        pkt.WriteUInt32(irec->rarity);
+    }
+
+    sess->SendPacket(pkt);
+}
+
+void PacketHandlers::HandleInventoryMove(Session* sess, SmartPacket& packet)
+{
+    uint32_t srcSlot = packet.ReadUInt32();
+    uint32_t dstSlot = packet.ReadUInt32();
+
+    sess->GetPlayer()->SwapInventorySlots(srcSlot, dstSlot);
+}
+
+void PacketHandlers::HandleInventoryRemove(Session* sess, SmartPacket& packet)
+{
+    uint32_t slot = packet.ReadUInt32();
+
+    sess->GetPlayer()->DestroyInventorySlot(slot);
 }
