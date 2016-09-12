@@ -1,0 +1,23 @@
+################################################
+### This is an example of configuration file ###
+### Change values to fit your needs          ###
+################################################
+
+################################################
+# BubbleWorld server configuration file        #
+################################################
+
+# database config
+database_host = localhost
+database_port = 3306
+database_username = bubbleworld
+database_password = bubblepassword
+database_dbname = bubbleworld_main
+
+# log config
+log_file = server.log
+logtype_mask = 3
+
+# network config
+listen_ip = 127.0.0.1
+listen_port = 7874
