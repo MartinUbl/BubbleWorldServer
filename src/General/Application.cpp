@@ -25,6 +25,7 @@
 #include "ResourceStreamService.h"
 #include "CRC32.h"
 #include "Log.h"
+#include "Config.h"
 #include "MapStorage.h"
 #include "MapManager.h"
 #include "CreatureStorage.h"
@@ -48,14 +49,26 @@ Application::~Application()
 
 bool Application::Init(int argc, char** argv)
 {
-    sLog->Info("BubbleWorld game server");
-
     // TODO: parse commandline options
+
+    sConfig->InitDefaults();
+
+    if (!sConfig->LoadConfig())
+        return false;
+
+    if (!sConfig->ValidateConfig())
+        return false;
+
+    sLog->Info("BubbleWorld game server");
 
     sLog->Info("MySQL Client Library version: %s\n", mysql_get_client_info());
 
     sLog->Info(">> Connecting to database...");
-    if (!sMainDatabase.Connect("127.0.0.1", 3306, "root", "root", "bubbleworld_main"))
+    if (!sMainDatabase.Connect(sConfig->GetStringValue(CONFIG_STRING_DB_HOST),
+        (uint16_t)sConfig->GetIntValue(CONFIG_INT_DB_PORT),
+        sConfig->GetStringValue(CONFIG_STRING_DB_USERNAME),
+        sConfig->GetStringValue(CONFIG_STRING_DB_PASSWORD),
+        sConfig->GetStringValue(CONFIG_STRING_DB_DBNAME)))
     {
         sLog->Error("Could not connect to database!");
         return false;
@@ -91,19 +104,18 @@ bool Application::Init(int argc, char** argv)
     sWaypointStorage->LoadFromDB();
     sLog->Info("");
 
-    // some messages?
     sResourceStreamService->Init();
 
     sScriptManager->Initialize();
     sLog->Info("");
 
     sLog->Info(">> Initializing networking layer...");
-    if (!sNetwork->Init(DEFAULT_NET_BIND_ADDR, DEFAULT_NET_BIND_PORT))
+    if (!sNetwork->Init(sConfig->GetStringValue(CONFIG_STRING_BIND_IP), (uint16_t)sConfig->GetIntValue(CONFIG_INT_BIND_PORT)))
     {
         sLog->Error("Could not initialize network layer!");
         return false;
     }
-    sLog->Info("Networking layer running, listening on %s:%u\n", DEFAULT_NET_BIND_ADDR, DEFAULT_NET_BIND_PORT);
+    sLog->Info("Networking layer running, listening on %s:%u\n", sConfig->GetStringValue(CONFIG_STRING_BIND_IP), (uint16_t)sConfig->GetIntValue(CONFIG_INT_BIND_PORT));
 
     sLog->Info("Initialization sequence complete\n");
     return true;

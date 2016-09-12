@@ -91,4 +91,41 @@ inline float sgnMod(float value, float mod)
     return mod > 0 ? value : -value;
 }
 
+#include <algorithm> 
+#include <functional> 
+#include <cctype>
+#include <locale>
+
+inline std::string &str_trim_left(std::string &s)
+{
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+    return s;
+}
+
+inline std::string &str_trim_right(std::string &s)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+    return s;
+}
+
+inline std::string &str_trim(std::string &s)
+{
+    return str_trim_left(str_trim_right(s));
+}
+
+static bool str2int(int64_t &res, char const *s, int base = 0)
+{
+    char *end;
+    int64_t l;
+    errno = 0;
+
+    l = strtoll(s, &end, base);
+
+    if ((errno == ERANGE && (l == LONG_MAX || l == LONG_MIN)) || l > INT_MAX || l < INT_MIN || *s == '\0' || *end != '\0')
+        return false;
+
+    res = l;
+    return true;
+}
+
 #endif

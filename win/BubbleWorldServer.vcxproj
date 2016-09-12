@@ -148,6 +148,7 @@
     <ClCompile Include="..\src\Gameplay\MapManager.cpp" />
     <ClCompile Include="..\src\Gameplay\ObjectAccessor.cpp" />
     <ClCompile Include="..\src\General\Application.cpp" />
+    <ClCompile Include="..\src\General\Config.cpp" />
     <ClCompile Include="..\src\General\CRC32.cpp" />
     <ClCompile Include="..\src\General\Log.cpp" />
     <ClCompile Include="..\src\General\Main.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="..\src\Gameplay\ObjectAccessor.h" />
     <ClInclude Include="..\src\General\Application.h" />
     <ClInclude Include="..\src\General\Compatibility.h" />
+    <ClInclude Include="..\src\General\Config.h" />
     <ClInclude Include="..\src\General\CRC32.h" />
     <ClInclude Include="..\src\General\General.h" />
     <ClInclude Include="..\src\General\Log.h" />

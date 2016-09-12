@@ -19,6 +19,7 @@
 
 #include "General.h"
 #include "Log.h"
+#include "Config.h"
 
 #include <iostream>
 #include <cstdarg>
@@ -27,8 +28,8 @@ Log::Log()
 {
     m_logFile = nullptr;
 
-    // TODO: use config file after its implementation
-    std::string logFileName = "server.log";
+    std::string logFileName = sConfig->GetStringValue(CONFIG_STRING_LOG_FILE);
+
     if (logFileName.length() == 0)
     {
         std::cout << "No log file specified, server messages won't be logged into file" << std::endl;
@@ -58,6 +59,9 @@ void Log::FileLog(const char* str)
 
 void Log::Info(const char *str, ...)
 {
+    if ((sConfig->GetIntValue(CONFIG_INT_LOG_MASK) & LOG_MASK_INFO) == 0)
+        return;
+
     va_list argList;
     va_start(argList, str);
     char buf[2048];
@@ -70,6 +74,9 @@ void Log::Info(const char *str, ...)
 
 void Log::Error(const char *str, ...)
 {
+    if ((sConfig->GetIntValue(CONFIG_INT_LOG_MASK) & LOG_MASK_ERROR) == 0)
+        return;
+
     va_list argList;
     va_start(argList, str);
     char buf[2048];
@@ -82,7 +89,38 @@ void Log::Error(const char *str, ...)
 
 void Log::Debug(const char *str, ...)
 {
-    // TODO: log level
+    if ((sConfig->GetIntValue(CONFIG_INT_LOG_MASK) & LOG_MASK_DEBUG) == 0)
+        return;
+
+    va_list argList;
+    va_start(argList, str);
+    char buf[2048];
+    vsnprintf(buf, 2048, str, argList);
+    va_end(argList);
+    std::cout << buf << std::endl;
+
+    FileLog(buf);
+}
+
+void Log::PacketIO(const char *str, ...)
+{
+    if ((sConfig->GetIntValue(CONFIG_INT_LOG_MASK) & LOG_MASK_PACKETIO) == 0)
+        return;
+
+    va_list argList;
+    va_start(argList, str);
+    char buf[2048];
+    vsnprintf(buf, 2048, str, argList);
+    va_end(argList);
+    std::cout << buf << std::endl;
+
+    FileLog(buf);
+}
+
+void Log::Network(const char *str, ...)
+{
+    if ((sConfig->GetIntValue(CONFIG_INT_LOG_MASK) & LOG_MASK_NETWORK) == 0)
+        return;
 
     va_list argList;
     va_start(argList, str);

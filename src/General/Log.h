@@ -22,6 +22,27 @@
 
 #include "Singleton.h"
 
+// type of log message
+enum LogType
+{
+    LOG_INFO        = 0,
+    LOG_ERROR       = 1,
+    LOG_DEBUG       = 2,
+    LOG_PACKETIO    = 3,
+    LOG_NETWORK     = 4,
+    MAX_LOG_TYPE
+};
+
+// mask built from log types
+enum LogTypeMask
+{
+    LOG_MASK_INFO = 1 << LOG_INFO,
+    LOG_MASK_ERROR = 1 << LOG_ERROR,
+    LOG_MASK_DEBUG = 1 << LOG_DEBUG,
+    LOG_MASK_PACKETIO = 1 << LOG_PACKETIO,
+    LOG_MASK_NETWORK = 1 << LOG_NETWORK,
+};
+
 /*
  * Singleton class maintaining logging services
  */
@@ -37,6 +58,10 @@ class Log
         void Error(const char *str, ...);
         // logs string with DEBUG severity
         void Debug(const char *str, ...);
+        // logs string with PacketIO type
+        void PacketIO(const char *str, ...);
+        // logs string with Network type
+        void Network(const char *str, ...);
 
     protected:
         // protected singleton constructor

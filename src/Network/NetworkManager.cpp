@@ -150,20 +150,7 @@ void NetworkManager::AcceptConnections()
 
         sess->SetRemoteAddr(tmpaddr);
 
-        /*
-#ifdef _WIN32
-        u_long arg = WINSOCK_NONBLOCKING_ARG;
-        if (ioctlsocket(res, FIONBIO, &arg) == SOCKET_ERROR)
-#else
-        int oldFlag = fcntl(m_socket, F_GETFL, 0);
-        if (fcntl(res, F_SETFL, oldFlag | O_NONBLOCK) == -1)
-#endif
-        {
-            sLog->Error("Failed to switch client socket to non-blocking mode");
-        }
-        */
-
-        std::cout << "Accepting connection from " << tmpaddr << std::endl;
+        sLog->Network("Accepting connection from %s", tmpaddr);
     }
 }
 
@@ -230,7 +217,7 @@ void NetworkManager::UpdateSessions()
         // if the session is marked as expired, disconnect client
         if (sess->IsMarkedAsExpired())
         {
-            sLog->Info("Client session (IP: %s) expired, disconnecting", sess->GetRemoteAddr());
+            sLog->Network("Client session (IP: %s) expired, disconnecting", sess->GetRemoteAddr());
             CloseSocket_gen(sess->GetSocket());
             itr = RemoveSession(itr);
             continue;
@@ -281,7 +268,7 @@ void NetworkManager::UpdateSessions()
                     {
                         delete[] recvdata;
 
-                        sLog->Error("Received malformed packet: opcode %u, size %u, real size %u; disconnecting client (IP: %s)", header_buf[0], header_buf[1], result, sess->GetRemoteAddr());
+                        sLog->Network("Received malformed packet: opcode %u, size %u, real size %u; disconnecting client (IP: %s)", header_buf[0], header_buf[1], result, sess->GetRemoteAddr());
                         //CloseSocket_gen(sess->GetSocket());
                         itr = RemoveSession(itr);
                         continue;
@@ -301,7 +288,7 @@ void NetworkManager::UpdateSessions()
             }
             else
             {
-                sLog->Error("Received malformed packet: no valid headers sent; disconnecting client (IP: %s)", sess->GetRemoteAddr());
+                sLog->Network("Received malformed packet: no valid headers sent; disconnecting client (IP: %s)", sess->GetRemoteAddr());
                 CloseSocket_gen(sess->GetSocket());
                 itr = RemoveSession(itr);
                 continue;
@@ -311,34 +298,11 @@ void NetworkManager::UpdateSessions()
         else if (error == SOCKETCONNABORT)
         {
             sess->Kick();
-            // set timeout if necessary
-            /*if (!sess->GetSessionTimeoutValue())
-            {
-                sess->SetSessionTimeoutValue(SESSION_INACTIVITY_EXPIRE);
-                sLog->Error("Client (IP: %s) aborted connection, marking session as expired and waiting for timeout", sess->GetRemoteAddr());
-            }*/
         }
         // connection closed by remote endpoint (either controlled or errorneous scenario, but initiated by client)
         else if (error == SOCKETCONNRESET)
         {
             sess->Kick();
-            /*if (sess->GetPlayer())
-            {
-                // set timeout if necessary
-                if (!sess->GetSessionTimeoutValue())
-                {
-                    sess->SetSessionTimeoutValue(SESSION_INACTIVITY_EXPIRE);
-                    sLog->Debug("Client (IP: %s) disconnected in room, marking session as expired and waiting for timeout", sess->GetRemoteAddr());
-                }
-
-                ++itr;
-            }
-            else
-            {
-                sLog->Debug("Client (IP: %s) disconnected", sess->GetRemoteAddr());
-                itr = RemoveSession(itr);
-            }*/
-
             continue;
         }
         else
@@ -348,7 +312,7 @@ void NetworkManager::UpdateSessions()
             // that we have some error set)
             if (error != SOCKETWOULDBLOCK && error != 0)
             {
-                sLog->Error("Unhandled socket error: %u; disconnecting client (IP: %s)", error, sess->GetRemoteAddr());
+                sLog->Network("Unhandled socket error: %u; disconnecting client (IP: %s)", error, sess->GetRemoteAddr());
                 CloseSocket_gen(sess->GetSocket());
                 itr = RemoveSession(itr);
                 continue;
@@ -372,7 +336,7 @@ void NetworkManager::SendPacket(SmartPacket &pkt, SOCK targetSocket)
     uint16_t op, sz;
     uint8_t* tosend = new uint8_t[SmartPacket::HeaderSize + pkt.GetSize()];
 
-    sLog->Debug("Sending packet %u to socket %u", pkt.GetOpcode(), targetSocket);
+    sLog->PacketIO("Sending packet %u to socket %u", pkt.GetOpcode(), targetSocket);
 
     op = htons(pkt.GetOpcode());
     sz = htons(pkt.GetSize());

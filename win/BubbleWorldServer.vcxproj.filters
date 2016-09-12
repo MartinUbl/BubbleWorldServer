@@ -172,6 +172,9 @@
     <ClCompile Include="..\src\Scripting\TestingScripts\BasicItemNPC.cpp">
       <Filter>src\Scripting\TestingScripts</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\General\Config.cpp">
+      <Filter>src\General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\General\Application.h">
@@ -320,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Objects\GuidMap.h">
       <Filter>src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\General\Config.h">
+      <Filter>src\General</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

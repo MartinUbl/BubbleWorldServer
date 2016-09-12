@@ -53,11 +53,11 @@ void Session::HandlePacket(SmartPacket &packet)
     // do not handle opcodes higher than maximum
     if (packet.GetOpcode() >= MAX_OPCODES)
     {
-        sLog->Error("Client (IP: %s) sent invalid packet (unknown opcode %u), not handling", GetRemoteAddr(), packet.GetOpcode());
+        sLog->Network("Client (IP: %s) sent invalid packet (unknown opcode %u), not handling", GetRemoteAddr(), packet.GetOpcode());
         return;
     }
 
-    sLog->Debug("NETWORK: Received packet %u", packet.GetOpcode());
+    sLog->Network("NETWORK: Received packet %u", packet.GetOpcode());
 
     // packet handlers might throw exception about trying to reach out of packet data range
     try
@@ -65,7 +65,7 @@ void Session::HandlePacket(SmartPacket &packet)
         // verify the state of client connection
         if ((PacketHandlerTable[packet.GetOpcode()].stateRestriction & (1 << (int)m_connectionState)) == 0)
         {
-            sLog->Error("Client (IP: %s) sent invalid packet (opcode %u) for state %u, not handling", GetRemoteAddr(), packet.GetOpcode(), m_connectionState);
+            sLog->Network("Client (IP: %s) sent invalid packet (opcode %u) for state %u, not handling", GetRemoteAddr(), packet.GetOpcode(), m_connectionState);
             return;
         }
 
@@ -118,7 +118,7 @@ void Session::SendQueuedPackets()
         else
         {
             // otherwise delay packet sending
-            sLog->Info("Packet send queue busy, delaying packet send");
+            sLog->Network("Packet send queue busy, delaying packet send");
             break;
         }
     }
